@@ -13,10 +13,13 @@
         android:theme="@style/Theme.AppAvaluos"
         tools:targetApi="31">
         <activity
+            android:name=".SignIn"
+            android:exported="false" />
+        <activity
             android:name=".Login"
             android:exported="false" />
         <activity
-            android:name=".MainActivity"
+            android:name=".MenuPrincipal"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
