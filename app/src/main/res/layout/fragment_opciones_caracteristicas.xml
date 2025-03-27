@@ -10,13 +10,12 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
-        >
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".6"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="16dp">
             <ImageButton
@@ -34,7 +33,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-
                 android:layout_marginBottom="16dp">
 
                 <ImageView
@@ -56,8 +54,7 @@
                 android:gravity="center"
                 android:text="Características del inmueble"
                 android:textColor="@color/black"
-                android:textSize="18sp"
-                />
+                android:textSize="18sp" />
 
             <!-- Folio -->
             <TextView
@@ -86,15 +83,13 @@
                     android:paddingRight="16dp"
                     android:paddingBottom="16dp">
 
-
                     <Button
                         android:id="@+id/btnSala"
                         android:layout_width="wrap_content"
                         android:layout_height="40dp"
                         android:background="@drawable/round_button"
                         android:text="Sala"
-                        android:fontFamily="sans-serif-medium"
-                        />
+                        android:fontFamily="sans-serif-medium" />
 
                     <Button
                         android:id="@+id/btnComedor"
@@ -105,8 +100,7 @@
                         android:text="Comedor"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnCocina"
@@ -117,8 +111,7 @@
                         android:text="Cocina"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnBano"
@@ -129,8 +122,7 @@
                         android:text="Baño"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnRecamara"
@@ -141,8 +133,7 @@
                         android:text="Recamara"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnEstancia"
@@ -153,8 +144,7 @@
                         android:text="Estancia"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnPatioP"
@@ -165,8 +155,7 @@
                         android:text="Patio Posterior"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnEstac"
@@ -177,8 +166,7 @@
                         android:text="Estacionamiento"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                     <Button
                         android:id="@+id/btnTerraza"
@@ -189,14 +177,20 @@
                         android:text="Terraza"
                         android:fontFamily="sans-serif-medium"
                         android:paddingLeft="6dp"
-                        android:paddingRight="6dp"
-                        />
+                        android:paddingRight="6dp" />
 
                 </LinearLayout>
             </ScrollView>
+
+            <!-- Botón Aceptar -->
+            <Button
+                android:id="@+id/btnAceptar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Aceptar"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="16dp" />
         </LinearLayout>
-
-
     </LinearLayout>
-
 </FrameLayout>

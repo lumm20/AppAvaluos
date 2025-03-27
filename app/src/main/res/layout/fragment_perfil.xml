@@ -68,8 +68,7 @@
                 android:inputType="textEmailAddress"
                 android:textSize="16sp"
                 android:padding="8dp"
-                android:layout_marginBottom="16dp"
-                 />
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -85,25 +84,48 @@
                 android:inputType="phone"
                 android:textSize="16sp"
                 android:padding="8dp"
-                android:layout_marginBottom="16dp"
-                />
+                android:layout_marginBottom="16dp" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Contraseña"
+                android:text="Contraseña actual"
                 android:textSize="16sp"
                 android:textColor="@color/black" />
 
             <EditText
-                android:id="@+id/etPassword"
+                android:id="@+id/etOldPassword"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textSize="16sp"
                 android:padding="8dp"
-                 />
+                android:layout_marginBottom="16dp" />
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nueva contraseña"
+                android:textSize="16sp"
+                android:textColor="@color/black" />
+
+            <EditText
+                android:id="@+id/etNewPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword"
+                android:textSize="16sp"
+                android:padding="8dp"
+                android:layout_marginBottom="16dp" />
+
+            <!-- Botón Guardar -->
+            <Button
+                android:id="@+id/btn_save"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Guardar"
+                android:textSize="16sp"
+                android:layout_marginTop="20dp" />
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

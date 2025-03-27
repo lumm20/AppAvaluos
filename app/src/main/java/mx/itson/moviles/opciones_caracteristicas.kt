@@ -6,6 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 
 class opciones_caracteristicas : Fragment() {
@@ -39,6 +40,7 @@ class opciones_caracteristicas : Fragment() {
         val btnInsElec: Button = view.findViewById(R.id.btnInsElec)
         val btnObraComp: Button = view.findViewById(R.id.btnObraComp)
         val btnElemAcc: Button = view.findViewById(R.id.btnElemAcc)
+        val btnAceptar: Button = view.findViewById(R.id.btnAceptar)
 
         // Ajustamos los valores de lugar para que coincidan con CaracteristicasAvaluo
         cargarCaracteristicas(btnInsHidra, 10, "Instalaciones hidráulicas")
@@ -46,6 +48,11 @@ class opciones_caracteristicas : Fragment() {
         cargarCaracteristicas(btnInsElec, 12, "Instalaciones eléctricas")
         cargarCaracteristicas(btnObraComp, 13, "Obras complementarias")
         cargarCaracteristicas(btnElemAcc, 14, "Elementos accesorios")
+
+        btnAceptar.setOnClickListener {
+            Toast.makeText(context, "Guardado con éxito", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.popBackStack()
+        }
 
         return view
     }

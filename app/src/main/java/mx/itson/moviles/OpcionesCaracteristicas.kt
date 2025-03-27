@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.Toast
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 
@@ -48,6 +49,7 @@ class OpcionesCaracteristicas : Fragment() {
         val btnPatioP: Button = view.findViewById(R.id.btnPatioP)
         val btnEstac: Button = view.findViewById(R.id.btnEstac)
         val btnTerraza: Button = view.findViewById(R.id.btnTerraza)
+        val btnAceptar: Button = view.findViewById(R.id.btnAceptar)
 
         // Load characteristics for some buttons
         cargarCaracteristicas(btnSala, 1, "Sala")
@@ -59,6 +61,11 @@ class OpcionesCaracteristicas : Fragment() {
         cargarCaracteristicas(btnPatioP, 7, "Patio posterior")
         cargarCaracteristicas(btnEstac, 8, "Estacionamiento")
         cargarCaracteristicas(btnTerraza, 9, "Terraza")
+
+        btnAceptar.setOnClickListener {
+            Toast.makeText(context, "Guardado con éxito", Toast.LENGTH_SHORT).show()
+            parentFragmentManager.popBackStack()
+        }
 
         return view
     }
@@ -81,11 +88,9 @@ class OpcionesCaracteristicas : Fragment() {
     }
 
     companion object {
-        // Define constant keys for arguments
         private const val ARG_OPCION = "opcion"
         private const val ARG_FOLIO = "folio"
 
-        // Factory method to create a new instance of the fragment
         @JvmStatic
         fun newInstance(opcion: String, folio: String) =
             OpcionesCaracteristicas().apply {
