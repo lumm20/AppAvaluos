@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -35,6 +36,35 @@ class NuevoAvaluoFragment : Fragment() {
     ): View? {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_nuevo_avaluo, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        val btnInmuebles: Button = view.findViewById(R.id.btnInmueble)
+        val btnEntorno : Button = view.findViewById(R.id.btnEntorno)
+
+        btnInmuebles.setOnClickListener {
+            val fragment = AgregarCaracteristicaFragment.newInstance(
+                "Inmueble",
+                "AVXXXXXXXXXX")
+
+            replaceFragment(fragment)
+        }
+        btnEntorno.setOnClickListener {
+            val fragment = AgregarCaracteristicaFragment.newInstance(
+                "Entorno",
+                "AVXXXXXXXXXX")
+            replaceFragment(fragment)
+        }
+    }
+
+
+    fun replaceFragment(fragment: Fragment) {
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {
