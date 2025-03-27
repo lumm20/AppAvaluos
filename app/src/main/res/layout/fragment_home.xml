@@ -29,6 +29,34 @@
             android:scaleType="fitCenter" />
     </FrameLayout>
 
+    <!-- LinearLayout para los botones "Mis citas" y "Cerrar sesión" -->
+    <LinearLayout
+        android:id="@+id/profileOptions"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="84dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnMisCitas"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Mis citas"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white" />
+
+        <Button
+            android:id="@+id/btnCerrarSesion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="Cerrar sesión"
+            android:textColor="@color/black"
+            android:backgroundTint="@color/white" />
+    </LinearLayout>
+
     <TextView
         android:id="@+id/text"
         android:layout_width="wrap_content"
