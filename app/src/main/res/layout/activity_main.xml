@@ -23,7 +23,7 @@
         android:layout_gravity="bottom"
         app:menu="@menu/menu_nav"
         android:background="@color/red"
-        app:itemRippleColor=""
+        app:itemRippleColor="#FEACAC"
         app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior"
         />
 

@@ -22,9 +22,11 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> replaceFragment(HomeFragment())
                 R.id.nav_citas -> replaceFragment(AgendarCitasFragment())
                 R.id.nav_info -> replaceFragment(InfoFragment())
+                R.id.nav_avaluos -> replaceFragment(NuevoAvaluo())
             }
             true
         }
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
