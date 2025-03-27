@@ -1,6 +1,5 @@
 package mx.itson.moviles
 
-import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -25,24 +24,30 @@ class NuevoAvaluo : Fragment() {
             val fragment = OpcionesCaracteristicas().apply {
                 arguments = Bundle().apply {
                     putString("folio", "XX0000111")
-                    putString("opcion","inmueble")
+                    putString("opcion", "inmueble")
                 }
             }
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment) // Usa el fragment con argumentos
+                .replace(R.id.fragment_container, fragment)
                 .addToBackStack(null)
                 .commit()
         }
 
         btnEntorno.setOnClickListener {
+            val fragment = opciones_caracteristicas().apply {
+                arguments = Bundle().apply {
+                    putString("folio", "XX0000111")
+                    putString("opcion", "entorno")
+                }
+            }
 
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, fragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         return view
     }
-
-
-
-
 }
