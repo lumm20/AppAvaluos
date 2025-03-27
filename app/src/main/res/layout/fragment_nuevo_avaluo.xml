@@ -1,18 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="@color/white"
-    tools:context=".AvaluoNuevo">
+    tools:context=".NuevoAvaluoFragment">
 
-    <!-- Contenido principal -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="match_parent"
         android:orientation="vertical"
         android:padding="16dp">
 
@@ -97,85 +92,4 @@
 
     </LinearLayout>
 
-    <!-- Barra de navegación inferior fija - EXACTAMENTE igual que en MenuPrincipal -->
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:orientation="horizontal"
-        android:layout_gravity="bottom"
-        android:background="@color/red">
-
-        <FrameLayout
-            android:id="@+id/home"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            >
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/home"
-                android:padding="4dp"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/pricing"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@color/red">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/pricing"
-                android:scaleType="centerInside"
-                android:padding="4dp"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/files"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@color/red">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/files"
-                android:scaleType="centerInside"
-                android:padding="4dp"/>
-        </FrameLayout>
-
-        <FrameLayout
-            android:id="@+id/info"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:clickable="true"
-            android:focusable="true"
-            android:background="@color/red">
-
-            <ImageView
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_gravity="center"
-                android:src="@drawable/info"
-                android:scaleType="centerInside"
-                android:padding="4dp"/>
-        </FrameLayout>
-    </LinearLayout>
-
-</LinearLayout>
-
+</FrameLayout>

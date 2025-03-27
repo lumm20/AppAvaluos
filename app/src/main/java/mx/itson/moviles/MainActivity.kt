@@ -2,6 +2,8 @@ package mx.itson.moviles
 
 import android.os.Bundle
 import android.view.View
+import android.view.ViewGroup
+import android.widget.Button
 import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
@@ -36,7 +38,8 @@ class MainActivity : AppCompatActivity() {
             true
         }
 
-        val menuView = layoutInflater.inflate(R.layout.profile_menu, findViewById(R.id.main), false)
+        val main:ViewGroup = findViewById(R.id.main)
+        val menuView = layoutInflater.inflate(R.layout.profile_menu, main, false)
         findViewById<CoordinatorLayout>(R.id.main).addView(menuView)
         profileMenu = menuView.findViewById(R.id.profileMenu)
         menuPanel = menuView.findViewById(R.id.menuPanel)
@@ -68,7 +71,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    private fun replaceFragment(fragment: Fragment) {
+    fun replaceFragment(fragment: Fragment) {
         supportFragmentManager.beginTransaction()
             .replace(R.id.fragment_container, fragment)
             .commit()
