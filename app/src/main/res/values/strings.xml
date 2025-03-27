@@ -3,6 +3,21 @@
     <string name="login_btn">Iniciar sesión</string>
     <string name="signin_link">No tienes una cuenta? Regístrate</string>
     <string name="signin_btn">Registrarse</string>
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    <!-- Agendar citas -->
+    <string name="agendar_visita">¡Agenda tu visita!</string>
+    <string name="info_personal">Información personal</string>
+    <string name="info_detallada">Información detallada</string>
+    <string name="dia_preferido">Día preferido para la visita</string>
+
+    <string name="hint_nombre">Nombre / Empresa</string>
+    <string name="hint_correo">Correo</string>
+    <string name="hint_telefono">Número de contacto</string>
+    <string name="hint_direccion">Dirección</string>
+    <string name="hint_fecha">DD/MM/AAAA</string>
+
+    <string name="siguiente">Siguiente</string>
+
+    <!-- Características avaluo -->
+    
 </resources>
