@@ -11,7 +11,7 @@
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:layout_marginBottom="56dp"
+        android:layout_marginBottom="80dp"
         android:background="@color/white">
 
         <LinearLayout
@@ -75,20 +75,20 @@
             <ListView
                 android:id="@+id/listaCaracteristicas"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent" />
-
-
+                android:layout_height="wrap_content" />
         </LinearLayout>
+
         <Button
             android:id="@+id/btnGuardar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/round_button"
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
-            android:text="Guardar"
+            android:layout_marginBottom="10dp"
+            android:background="@drawable/round_button"
             android:fontFamily="sans-serif-medium"
-            />
+            android:text="Guardar" />
+
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/secondBottomNavigation"
             android:layout_width="match_parent"

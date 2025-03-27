@@ -17,18 +17,19 @@ import com.google.android.material.bottomnavigation.BottomNavigationView
 class CaracteristicasAvaluo : Fragment() {
     var menu: ArrayList<Caracteristica> = ArrayList<Caracteristica>()
 
-    private var lugar: Int? = null
-    private var titulo: String? = null
-    private var tipo: String? = null
+    private var lugar: Int = 0
+    private var titulo: String = "Desconocido"
+    private var tipo: String = "Pisos"
+    private lateinit var bottomNavigation: BottomNavigationView
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         // Retrieve arguments passed to the fragment
         arguments?.let {
-            lugar = it.getInt("lugar")
-            titulo = it.getString("desc")
-            tipo = it.getString("tipo")
+            lugar = it.getInt(ARG_LUGAR, 0)
+            titulo = it.getString(ARG_TITULO) ?: "Desconocido"
+            tipo = it.getString(ARG_TIPO) ?: "Pisos"
         }
     }
 
@@ -41,46 +42,82 @@ class CaracteristicasAvaluo : Fragment() {
         val txtTitulo: TextView = view.findViewById(R.id.txtTitulo)
         txtTitulo.text = "Acabados $titulo"
 
-        val bottomNavigation:BottomNavigationView = view.findViewById(R.id.secondBottomNavigation)
-        cargarNavegacionExtra(bottomNavigation)
-        val listaCaracteristicas: ListView = view.findViewById(R.id.listaCaracteristicas)
-        agregarCaracteristicas()
+        bottomNavigation = view.findViewById(R.id.secondBottomNavigation)
+        setupBottomNavigation()
 
-        val adaptador = AdaptadorCaracteristica(requireContext(), menu)
-        listaCaracteristicas.adapter = adaptador
+        val listaCaracteristicas: ListView = view.findViewById(R.id.listaCaracteristicas)
+        val menu = obtenerCaracteristicas()
+
+        listaCaracteristicas.adapter = AdaptadorCaracteristica(requireContext(), menu)
 
         // Return the view you've already set up
         return view
     }
 
-    fun cargarNavegacionExtra(nav: BottomNavigationView){
-        nav.setOnItemSelectedListener { item ->
+    private fun setupBottomNavigation() {
+        bottomNavigation.selectedItemId = when(tipo) {
+            "Pisos" -> R.id.nav_piso
+            "Muros" -> R.id.nav_muro
+            "Plafones" -> R.id.nav_plafones
+            else -> R.id.nav_piso
+        }
+
+        bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_piso -> cargarPantalla("Pisos")
-                R.id.nav_muro -> cargarPantalla("Muros")
-                R.id.nav_plafones -> cargarPantalla("Plafones")
+                R.id.nav_piso -> {
+                    if (tipo != "Pisos") {
+                        tipo = "Pisos"
+                        actualizarVista()
+                    }
+                    true
+                }
+                R.id.nav_muro -> {
+                    if (tipo != "Muros") {
+                        tipo = "Muros"
+                        actualizarVista()
+                    }
+                    true
+                }
+                R.id.nav_plafones -> {
+                    if (tipo != "Plafones") {
+                        tipo = "Plafones"
+                        actualizarVista()
+                    }
+                    true
+                }
                 else -> false
             }
         }
     }
 
-    fun cargarPantalla(xTipo:String): Boolean {
+    private fun actualizarVista() {
+        view?.findViewById<TextView>(R.id.txtTitulo)?.text = "Acabados $titulo"
+
+        val listaCaracteristicas = view?.findViewById<ListView>(R.id.listaCaracteristicas)
+        listaCaracteristicas?.adapter = AdaptadorCaracteristica(requireContext(), obtenerCaracteristicas())
+    }
+
+    fun cargarPantalla(nuevoTipo:String): Boolean {
+        if (nuevoTipo == tipo) return false
+
         val fragment = CaracteristicasAvaluo().apply {
             arguments = Bundle().apply {
                 putString("desc", titulo)
-                putInt("lugar",id)
-                putString("tipo", xTipo)
+                putInt("lugar", lugar)
+                putString("tipo", nuevoTipo)
             }
         }
 
         parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment) // Usa el fragment con argumentos
+            .replace(R.id.fragment_container, fragment)
             .addToBackStack(null)
             .commit()
+
         return true
     }
 
-    fun agregarCaracteristicas() {
+    private fun obtenerCaracteristicas(): ArrayList<Caracteristica> {
+        val menu = ArrayList<Caracteristica>()
         when (tipo) {
             "Pisos" -> {
                 menu.add(Caracteristica(1,"Loseta cerámica",false))
@@ -178,6 +215,7 @@ class CaracteristicasAvaluo : Fragment() {
                 menu.add(Caracteristica(89, "Se supone tirol", false))
             }
         }
+        return menu
     }
 
     private class AdaptadorCaracteristica: BaseAdapter {
@@ -213,21 +251,19 @@ class CaracteristicasAvaluo : Fragment() {
             checkBox.isChecked = item.seleccionado
 
             return vista
-
-
         }
     }
     
     companion object {
         // Define constant keys for arguments
-        private const val ARG_LUGAR = "opcion"
+        private const val ARG_LUGAR = "lugar"
         private const val ARG_TITULO = "desc"
         private const val ARG_TIPO = "tipo"
 
         // Factory method to create a new instance of the fragment
         @JvmStatic
         fun newInstance(lugar: Int, titulo: String, tipo:String) =
-            OpcionesCaracteristicas().apply {
+            CaracteristicasAvaluo().apply {
                 arguments = Bundle().apply {
                     putInt(ARG_LUGAR, lugar)
                     putString(ARG_TITULO, titulo)

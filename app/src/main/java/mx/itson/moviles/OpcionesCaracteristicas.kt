@@ -8,7 +8,6 @@ import android.view.ViewGroup
 import android.widget.Button
 import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.navigation.fragment.findNavController
 
 class OpcionesCaracteristicas : Fragment() {
     private var opcion: String? = null
@@ -57,20 +56,20 @@ class OpcionesCaracteristicas : Fragment() {
         val btnElemAcc: Button = view.findViewById(R.id.btnElemAcc)
 
         // Load characteristics for some buttons (example)
-        cargarCaracteristicas(btnSala, 1,"sala")
-        cargarCaracteristicas(btnCome, 2, "comedor")
-        cargarCaracteristicas(btnCocina, 3,"cocina")
-        cargarCaracteristicas(btnBano, 4,"baño")
-        cargarCaracteristicas(btnRecamara, 5,"recamara")
-        cargarCaracteristicas(btnEstancia, 6,"estancia")
-        cargarCaracteristicas(btnPatioP, 7,"patio posterior")
-        cargarCaracteristicas(btnEstac, 8,"estacionamiento")
-        cargarCaracteristicas(btnTerraza, 9,"terraza")
-        cargarCaracteristicas(btnInsHidra, 10,"instalciones hidráulicas")
-        cargarCaracteristicas(btnInsSani, 11,"instalaciones sanitarias")
-        cargarCaracteristicas(btnInsElec, 12,"instalaciones eléctricas")
-        cargarCaracteristicas(btnObraComp, 13,"obras complementarias")
-        cargarCaracteristicas(btnElemAcc, 14,"elementos accesorios")
+        cargarCaracteristicas(btnSala, 1,"Sala")
+        cargarCaracteristicas(btnCome, 2, "Comedor")
+        cargarCaracteristicas(btnCocina, 3,"Cocina")
+        cargarCaracteristicas(btnBano, 4,"Baño")
+        cargarCaracteristicas(btnRecamara, 5,"Recamara")
+        cargarCaracteristicas(btnEstancia, 6,"Estancia")
+        cargarCaracteristicas(btnPatioP, 7,"Patio posterior")
+        cargarCaracteristicas(btnEstac, 8,"Estacionamiento")
+        cargarCaracteristicas(btnTerraza, 9,"Terraza")
+        cargarCaracteristicas(btnInsHidra, 10,"Instalciones hidráulicas")
+        cargarCaracteristicas(btnInsSani, 11,"Instalaciones sanitarias")
+        cargarCaracteristicas(btnInsElec, 12,"Instalaciones eléctricas")
+        cargarCaracteristicas(btnObraComp, 13,"Obras complementarias")
+        cargarCaracteristicas(btnElemAcc, 14,"Elementos accesorios")
 
         return view
     }
