@@ -13,31 +13,17 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         enableEdgeToEdge()
-        ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main)) { v, insets ->
-            val systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars())
-            v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom)
-            insets
-        }
-
         val bottomNavigation = findViewById<BottomNavigationView>(R.id.bottomNavigation)
 
-        // Cargar HomeFragment inicialmente si no hay estado guardado
-        if (savedInstanceState == null) {
-            replaceFragment(HomeFragment())
-        }
+        replaceFragment(HomeFragment())
 
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> {
-                    replaceFragment(HomeFragment())
-                    true
-                }
-                R.id.nav_avaluos -> {
-                    replaceFragment(NuevoAvaluo())
-                    true
-                }
-                else -> false
+                R.id.nav_home -> replaceFragment(HomeFragment())
+                R.id.nav_citas -> replaceFragment(AgendarCitasFragment())
+                R.id.nav_info -> replaceFragment(InfoFragment())
             }
+            true
         }
     }
 
