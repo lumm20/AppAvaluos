@@ -6,6 +6,7 @@ import android.widget.FrameLayout
 import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.OnBackPressedCallback
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.coordinatorlayout.widget.CoordinatorLayout
@@ -55,6 +56,16 @@ class MainActivity : AppCompatActivity() {
             hideProfileMenu()
         }
 
+//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
+//            override fun handleOnBackPressed() {
+//                if (profileMenu.visibility == View.VISIBLE) {
+//                    hideProfileMenu()
+//                } else {
+//                    finish()
+//                }
+//            }
+//        } )
+
     }
 
     private fun replaceFragment(fragment: Fragment) {
@@ -84,13 +95,5 @@ class MainActivity : AppCompatActivity() {
             .start()
     }
 
-    // Handle back button to close menu if open
-    override fun onBackPressed() {
-        if (profileMenu.visibility == View.VISIBLE) {
-            hideProfileMenu()
-        } else {
-            super.onBackPressedDispatcher
-        }
-    }
 
 }

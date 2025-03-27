@@ -109,6 +109,17 @@
         android:textColorHint="#9E9E9E"
         android:layout_gravity="center"/>
 
+    <TextView
+        android:id="@+id/tvError"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:textColor="@color/red"
+        android:visibility="invisible"
+        android:paddingTop="20dp"
+        android:paddingBottom="15dp"
+        android:textAlignment="center"
+        />
+
     <Button
         android:id="@+id/sign_in"
         android:layout_width="160dp"
