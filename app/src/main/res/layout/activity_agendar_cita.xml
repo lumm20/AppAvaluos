@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AgendarCita">
+
+    <!-- Contenido principal -->
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:padding="16dp">
+
+        <!-- Logo circular -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp">
+
+            <ImageView
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:src="@drawable/whale"
+                android:background="@drawable/circulo_fondo"
+                android:padding="16dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside" />
+        </LinearLayout>
+
+        <!-- Título -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="16dp"
+            android:layout_gravity="center"
+            android:gravity="center"
+            android:text="¡Agenda tu visita!"
+            android:textColor="@color/black"
+            android:textSize="34sp"
+            android:textStyle="bold" />
+
+        <!-- Texto descriptivo -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Para el registro de un avalúo es necesario llenar los siguientes datos para ser más preciso. En los botones de abajo puedes dar más detalles."
+            android:textSize="16sp"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_marginBottom="24dp" />
+
+        <!-- Folio -->
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Folio: AVXXXXXXXXXX"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center"
+            android:layout_marginBottom="32dp" />
+
+
+        <Button
+            android:id="@+id/btnInmueble"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:layout_marginTop="20dp"
+            android:layout_gravity="center"
+            android:text="Características del inmueble"
+            android:fontFamily="sans-serif-medium"
+            />
+        <Button
+            android:id="@+id/btnEntorno"
+            android:layout_width="240dp"
+            android:layout_height="wrap_content"
+            android:background="@drawable/round_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="Características del entorno"
+            android:fontFamily="sans-serif-medium"
+            />
+    </LinearLayout>
+
+
+</LinearLayout>
