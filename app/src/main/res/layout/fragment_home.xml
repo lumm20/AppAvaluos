@@ -49,6 +49,17 @@
             android:backgroundTint="@color/white" />
 
         <Button
+            android:id="@+id/btnEditarPerfil"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:background="@drawable/round_button"
+            android:layout_marginTop="10dp"
+            android:text="Editar Perfil"
+            android:fontFamily="sans-serif-medium"
+            android:paddingLeft="6dp"
+            android:paddingRight="6dp" />
+
+        <Button
             android:id="@+id/btnCerrarSesion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -56,6 +67,8 @@
             android:text="Cerrar sesión"
             android:textColor="@color/black"
             android:backgroundTint="@color/white" />
+
+
     </LinearLayout>
 
     <TextView

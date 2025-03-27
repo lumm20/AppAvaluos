@@ -31,6 +31,7 @@ class HomeFragment : Fragment() {
         val profileIcon = view.findViewById<View>(R.id.profile)
         val profileOptions = view.findViewById<LinearLayout>(R.id.profileOptions)
         val btnMisCitas = view.findViewById<Button>(R.id.btnMisCitas)
+        val btnEditarPerfil = view.findViewById<Button>(R.id.btnEditarPerfil)
         val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesion)
 
         profileIcon.setOnClickListener {
@@ -38,11 +39,18 @@ class HomeFragment : Fragment() {
             profileOptions.visibility = if (isProfileOptionsVisible) View.VISIBLE else View.GONE
         }
 
-        // Navegación manual a MisCitasFragment
         btnMisCitas.setOnClickListener {
             val misCitasFragment = MisCitasFragment()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, misCitasFragment)
+                .addToBackStack(null)
+                .commit()
+        }
+
+        btnEditarPerfil.setOnClickListener {
+            val perfilFragment = PerfilFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, perfilFragment)
                 .addToBackStack(null)
                 .commit()
         }
