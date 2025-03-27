@@ -19,9 +19,16 @@ class MainActivity : AppCompatActivity() {
 
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
-                R.id.nav_home -> replaceFragment(HomeFragment())
+                R.id.nav_home -> {
+                    replaceFragment(HomeFragment())
+                    true
+                }
+                R.id.nav_avaluos -> {
+                    replaceFragment(NuevoAvaluo())
+                    true
+                }
+                else -> false
             }
-            true
         }
     }
 

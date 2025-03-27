@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".OpcionesCaracteristicas">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight=".6"
+            android:orientation="vertical"
+            android:padding="16dp">
+            <ImageButton
+                android:id="@+id/btn_back"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/flecha_atras"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:contentDescription="Regresar" />
+
+            <!-- Logo circular -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+
+                android:layout_marginBottom="16dp">
+
+                <ImageView
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:src="@drawable/whale"
+                    android:background="@drawable/circulo_fondo"
+                    android:padding="16dp"
+                    android:adjustViewBounds="true"
+                    android:scaleType="centerInside" />
+            </LinearLayout>
+
+            <!-- Título -->
+            <TextView
+                android:id="@+id/txtTitulo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                android:gravity="center"
+                android:text="Características del inmueble"
+                android:textColor="@color/black"
+                android:textSize="18sp"
+                />
+
+            <!-- Folio -->
+            <TextView
+                android:id="@+id/txtFolio"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Folio: AVXXXXXXXXXX"
+                android:textSize="16sp"
+                android:textStyle="bold"
+                android:textColor="@color/black"
+                android:gravity="center_horizontal"
+                android:layout_gravity="center"
+                android:layout_marginBottom="32dp" />
+
+            <ScrollView
+                android:layout_width="match_parent"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:layout_marginBottom="20dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingBottom="16dp">
+
+
+                    <Button
+                        android:id="@+id/btnSala"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:text="Sala"
+                        android:fontFamily="sans-serif-medium"
+                        />
+
+                    <Button
+                        android:id="@+id/btnComedor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Comedor"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnCocina"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Cocina"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnBano"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Baño"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnRecamara"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Recamara"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnEstancia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Estancia"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnPatioP"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Patio Posterior"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnEstac"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Estacionamiento"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnTerraza"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Terraza"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnInsHidra"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Instaciones Hidráulicas"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnInsSani"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Instalaciones Sanitaria"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnInsElec"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Instalación Eléctrica"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+
+                    <Button
+                        android:id="@+id/btnObraComp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Obra Complementarias"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+                    <Button
+                        android:id="@+id/btnElemAcc"
+                        android:layout_width="wrap_content"
+                        android:layout_height="40dp"
+                        android:background="@drawable/round_button"
+                        android:layout_marginTop="10dp"
+                        android:text="Elemento Accesorios"
+                        android:fontFamily="sans-serif-medium"
+                        android:paddingLeft="6dp"
+                        android:paddingRight="6dp"
+                        />
+
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+</FrameLayout>
