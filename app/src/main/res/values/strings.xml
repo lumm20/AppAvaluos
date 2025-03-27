@@ -6,4 +6,6 @@
     <string name="folios_activos">Folios activos</string>
     <string name="mis_avaluos">Mis avalúos</string>
     <string name="btn_nuevo_avaluo">Nuevo avalúo ></string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
