@@ -7,7 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.LinearLayout
+import androidx.cardview.widget.CardView
 
 class HomeFragment : Fragment() {
     private var param1: String? = null
@@ -28,15 +28,16 @@ class HomeFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        val profileIcon = view.findViewById<View>(R.id.profile)
-        val profileOptions = view.findViewById<LinearLayout>(R.id.profileOptions)
+        val profileIcon = view.findViewById<CardView>(R.id.profile)
+        val profileOptionsCard = view.findViewById<CardView>(R.id.profileOptionsCard)
         val btnMisCitas = view.findViewById<Button>(R.id.btnMisCitas)
         val btnEditarPerfil = view.findViewById<Button>(R.id.btnEditarPerfil)
         val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesion)
+        val btnNuevoAvaluo = view.findViewById<Button>(R.id.btnNuevoAvaluo)
 
         profileIcon.setOnClickListener {
             isProfileOptionsVisible = !isProfileOptionsVisible
-            profileOptions.visibility = if (isProfileOptionsVisible) View.VISIBLE else View.GONE
+            profileOptionsCard.visibility = if (isProfileOptionsVisible) View.VISIBLE else View.GONE
         }
 
         btnMisCitas.setOnClickListener {
@@ -60,6 +61,11 @@ class HomeFragment : Fragment() {
             intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
             startActivity(intent)
             requireActivity().finish()
+        }
+        
+        btnNuevoAvaluo.setOnClickListener {
+            val listAvaluosIntent = Intent(requireContext(), MisAvaluosActivity::class.java)
+            startActivity(listAvaluosIntent)
         }
 
         return view

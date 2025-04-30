@@ -5,14 +5,15 @@
     android:id="@+id/main"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@color/background_light"
     tools:context=".HomeFragment">
 
     <ImageView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:src="@drawable/avaluos"
-        android:alpha="0.85"
+        android:src="@drawable/building_background"
+        android:alpha="0.2"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
@@ -20,7 +21,7 @@
         android:id="@+id/profile"
         android:layout_width="48dp"
         android:layout_height="48dp"
-        android:layout_marginTop="36dp"
+        android:layout_marginTop="48dp"
         android:layout_marginStart="25dp"
         app:cardCornerRadius="24dp"
         app:cardElevation="4dp"
@@ -57,26 +58,28 @@
             android:padding="12dp">
 
             <Button
-                android:id="@+id/btnMisCitas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Mis citas"
-                android:textColor="@color/text_primary"
-                android:drawableStart="@drawable/calendario"
-                android:drawablePadding="8dp"
-                android:backgroundTint="@color/surface"
-                android:gravity="start|center_vertical" />
-
-            <Button
                 android:id="@+id/btnEditarPerfil"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:text="Editar Perfil"
-                android:backgroundTint="@color/primary"
                 android:textColor="@color/white"
                 android:drawableStart="@drawable/ic_profile"
                 android:drawablePadding="8dp"
+                android:backgroundTint="@color/primary"
+                android:drawableTint="@color/white"
+                android:gravity="start|center_vertical" />
+
+            <Button
+                android:id="@+id/btnMisCitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Mis citas"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/calendario"
+                android:drawablePadding="8dp"
+                android:backgroundTint="@color/primary"
+                android:drawableTint="@color/white"
                 android:gravity="start|center_vertical" />
 
             <Button
@@ -85,8 +88,11 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text="Cerrar sesión"
-                android:textColor="@color/error"
-                android:backgroundTint="@color/surface"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary"
+                android:drawableStart="@android:drawable/ic_lock_power_off"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/white"
                 android:gravity="start|center_vertical" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
@@ -133,6 +139,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:background="@drawable/round_button"
+                android:backgroundTint="@color/primary"
                 android:padding="12dp"
                 android:text="Nuevo Avalúo"
                 android:textColor="@color/white"

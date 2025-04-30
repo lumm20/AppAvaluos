@@ -1,25 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".opciones_caracteristicas">
+    tools:context=".OpcionesCaracteristicas">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
         android:layout_marginTop="20dp"
-        android:background="@color/white"
-        android:paddingBottom="80dp">
+        android:background="@color/white">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_weight=".6"
+            android:layout_weight="1"
             android:orientation="vertical"
             android:padding="16dp">
-
+            
             <ImageButton
                 android:id="@+id/btn_back"
                 android:layout_width="24dp"
@@ -28,127 +28,71 @@
                 android:background="?attr/selectableItemBackgroundBorderless"
                 android:adjustViewBounds="true"
                 android:scaleType="centerInside"
-                android:contentDescription="Regresar" />
+                android:contentDescription="@string/btn_back"
+                app:tint="@color/primary" />
 
+            <!-- Logo circular -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginTop="16dp"
                 android:layout_marginBottom="16dp">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/whale"
-                    android:background="@drawable/circulo_fondo"
+                    android:src="@drawable/muro"
+                    android:background="@drawable/circulo_fondo_azul"
                     android:padding="16dp"
                     android:adjustViewBounds="true"
-                    android:scaleType="centerInside" />
+                    android:scaleType="centerInside"
+                    app:tint="@color/white" />
             </LinearLayout>
 
+            <!-- Título -->
             <TextView
                 android:id="@+id/txtTitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
                 android:gravity="center"
-                android:text="Características del inmueble"
-                android:textColor="@color/black"
-                android:textSize="18sp" />
+                android:text="@string/caracteristicas_entorno"
+                android:textColor="@color/text_primary"
+                android:textSize="20sp"
+                android:textStyle="bold" />
 
+            <!-- Folio -->
             <TextView
                 android:id="@+id/txtFolio"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Folio: AVXXXXXXXXXX"
+                android:text="@string/folio_placeholder"
                 android:textSize="16sp"
                 android:textStyle="bold"
-                android:textColor="@color/black"
+                android:textColor="@color/primary"
                 android:gravity="center_horizontal"
                 android:layout_gravity="center"
-                android:layout_marginBottom="32dp" />
+                android:layout_marginBottom="24dp" />
 
-            <ScrollView
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerCaracteristicas"
                 android:layout_width="match_parent"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:layout_marginBottom="20dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingLeft="16dp"
-                    android:paddingRight="16dp"
-                    android:paddingBottom="16dp">
-
-                    <Button
-                        android:id="@+id/btnInsHidra"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_button"
-                        android:text="Instalaciones Hidráulicas"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp" />
-
-                    <Button
-                        android:id="@+id/btnInsSani"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_button"
-                        android:layout_marginTop="10dp"
-                        android:text="Instalaciones Sanitarias"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp" />
-
-                    <Button
-                        android:id="@+id/btnInsElec"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_button"
-                        android:layout_marginTop="10dp"
-                        android:text="Instalaciones Eléctricas"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp" />
-
-                    <Button
-                        android:id="@+id/btnObraComp"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_button"
-                        android:layout_marginTop="10dp"
-                        android:text="Obras Complementarias"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp" />
-
-                    <Button
-                        android:id="@+id/btnElemAcc"
-                        android:layout_width="wrap_content"
-                        android:layout_height="40dp"
-                        android:background="@drawable/round_button"
-                        android:layout_marginTop="10dp"
-                        android:text="Elementos Accesorios"
-                        android:fontFamily="sans-serif-medium"
-                        android:paddingLeft="6dp"
-                        android:paddingRight="6dp" />
-
-                </LinearLayout>
-            </ScrollView>
+                android:layout_marginBottom="20dp" />
 
             <!-- Botón Aceptar -->
             <Button
                 android:id="@+id/btnAceptar"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Aceptar"
+                android:text="@string/aceptar"
                 android:textSize="16sp"
+                android:backgroundTint="@color/primary"
+                android:textColor="@color/white"
                 android:layout_marginTop="20dp"
                 android:layout_marginBottom="16dp" />
-
         </LinearLayout>
     </LinearLayout>
 </FrameLayout>

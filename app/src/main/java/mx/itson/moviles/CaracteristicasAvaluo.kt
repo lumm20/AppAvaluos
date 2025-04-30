@@ -8,18 +8,23 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.CheckBox
-import android.widget.ImageView
+import android.widget.CompoundButton
+import android.widget.ImageButton
 import android.widget.ListView
 import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class CaracteristicasAvaluo : Fragment() {
-    var menu: ArrayList<Caracteristica> = ArrayList<Caracteristica>()
+    private var menu: ArrayList<Caracteristica> = ArrayList<Caracteristica>()
+    private var adapter: AdaptadorCaracteristica? = null
 
     private var lugar: Int = 0
     private var titulo: String = "Desconocido"
     private var tipo: String = "Pisos"
     private lateinit var bottomNavigation: BottomNavigationView
+
+    // Mapa para almacenar el estado de las características seleccionadas
+    private val caracteristicasSeleccionadas = mutableMapOf<String, MutableSet<Int>>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,11 +45,16 @@ class CaracteristicasAvaluo : Fragment() {
 
         val txtTitulo: TextView = view.findViewById(R.id.txtTitulo)
         bottomNavigation = view.findViewById(R.id.secondBottomNavigation)
+        val btnBack: ImageButton = view.findViewById(R.id.btn_back)
+
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         // Si lugar está entre 10 y 14 (entorno), ocultamos el BottomNavigationView y ajustamos el título
         if (lugar in 10..14) {
             bottomNavigation.visibility = View.GONE
-            txtTitulo.text = titulo // Mostramos el título directamente (por ejemplo, "Instalaciones Hidráulicas")
+            txtTitulo.text = titulo // Mostramos el título
         } else {
             bottomNavigation.visibility = View.VISIBLE
             txtTitulo.text = "Acabados $titulo" // Para Pisos, Muros, Plafones
@@ -53,9 +63,47 @@ class CaracteristicasAvaluo : Fragment() {
 
         val listaCaracteristicas: ListView = view.findViewById(R.id.listaCaracteristicas)
         menu = obtenerCaracteristicas()
-        listaCaracteristicas.adapter = AdaptadorCaracteristica(requireContext(), menu)
+        
+        // Restaurar selecciones previas
+        val clave = obtenerClaveAlmacenamiento()
+        if (caracteristicasSeleccionadas.containsKey(clave)) {
+            val seleccionadas = caracteristicasSeleccionadas[clave] ?: emptySet()
+            
+            for (caracteristica in menu) {
+                caracteristica.seleccionado = caracteristica.idCaracteristica in seleccionadas
+            }
+        }
+        
+        adapter = AdaptadorCaracteristica(requireContext(), menu) { id, isChecked ->
+            actualizarSeleccion(id, isChecked)
+        }
+        listaCaracteristicas.adapter = adapter
 
         return view
+    }
+
+    private fun obtenerClaveAlmacenamiento(): String {
+        return if (lugar in 10..14) {
+            "entorno_$lugar"
+        } else {
+            "inmueble_${lugar}_$tipo"
+        }
+    }
+
+    private fun actualizarSeleccion(idCaracteristica: Int, seleccionado: Boolean) {
+        val clave = obtenerClaveAlmacenamiento()
+        
+        if (!caracteristicasSeleccionadas.containsKey(clave)) {
+            caracteristicasSeleccionadas[clave] = mutableSetOf()
+        }
+        
+        val selecciones = caracteristicasSeleccionadas[clave]!!
+        
+        if (seleccionado) {
+            selecciones.add(idCaracteristica)
+        } else {
+            selecciones.remove(idCaracteristica)
+        }
     }
 
     private fun setupBottomNavigation() {
@@ -103,26 +151,22 @@ class CaracteristicasAvaluo : Fragment() {
 
         view?.findViewById<TextView>(R.id.txtTitulo)?.text = "Acabados $titulo"
         val listaCaracteristicas = view?.findViewById<ListView>(R.id.listaCaracteristicas)
-        listaCaracteristicas?.adapter = AdaptadorCaracteristica(requireContext(), obtenerCaracteristicas())
-    }
-
-    fun cargarPantalla(nuevoTipo: String): Boolean {
-        if (nuevoTipo == tipo || lugar !in 1..9) return false
-
-        val fragment = CaracteristicasAvaluo().apply {
-            arguments = Bundle().apply {
-                putString("desc", titulo)
-                putInt("lugar", lugar)
-                putString("tipo", nuevoTipo)
+        menu = obtenerCaracteristicas()
+        
+        // Restaurar selecciones previas
+        val clave = obtenerClaveAlmacenamiento()
+        if (caracteristicasSeleccionadas.containsKey(clave)) {
+            val seleccionadas = caracteristicasSeleccionadas[clave] ?: emptySet()
+            
+            for (caracteristica in menu) {
+                caracteristica.seleccionado = caracteristica.idCaracteristica in seleccionadas
             }
         }
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, fragment)
-            .addToBackStack(null)
-            .commit()
-
-        return true
+        
+        adapter = AdaptadorCaracteristica(requireContext(), menu) { id, isChecked ->
+            actualizarSeleccion(id, isChecked)
+        }
+        listaCaracteristicas?.adapter = adapter
     }
 
     private fun obtenerCaracteristicas(): ArrayList<Caracteristica> {
@@ -307,37 +351,37 @@ class CaracteristicasAvaluo : Fragment() {
         return menu
     }
 
-    private class AdaptadorCaracteristica : BaseAdapter {
-        var caracteristica = ArrayList<Caracteristica>()
-        var contexto: Context? = null
+    // Nuevo adaptador con listener para los checkboxes
+    private class AdaptadorCaracteristica(
+        private val contexto: Context, 
+        private val caracteristicas: ArrayList<Caracteristica>, 
+        private val onCheckBoxClick: (Int, Boolean) -> Unit
+    ) : BaseAdapter() {
 
-        constructor(contexto: Context, carac: ArrayList<Caracteristica>) {
-            this.caracteristica = carac
-            this.contexto = contexto
-        }
+        override fun getCount(): Int = caracteristicas.size
 
-        override fun getCount(): Int {
-            return caracteristica.size
-        }
+        override fun getItem(position: Int): Any = caracteristicas[position]
 
-        override fun getItem(position: Int): Any {
-            return caracteristica[position]
-        }
-
-        override fun getItemId(position: Int): Long {
-            return position.toLong()
-        }
+        override fun getItemId(position: Int): Long = position.toLong()
 
         override fun getView(position: Int, convertView: View?, parent: ViewGroup?): View {
-            var item = caracteristica[position]
-            var inflador = LayoutInflater.from(contexto)
-            var vista = inflador.inflate(R.layout.item_caracteristica, null)
+            val item = caracteristicas[position]
+            val inflador = LayoutInflater.from(contexto)
+            val vista = convertView ?: inflador.inflate(R.layout.item_caracteristica, null)
 
-            var txtCaracteristica: TextView = vista.findViewById(R.id.txvCarac)
-            var checkBox: CheckBox = vista.findViewById(R.id.cbx)
+            val txtCaracteristica: TextView = vista.findViewById(R.id.txvCarac)
+            val checkBox: CheckBox = vista.findViewById(R.id.cbx)
 
             txtCaracteristica.text = item.nombre
+            
+            // Evita el callback infinito
+            checkBox.setOnCheckedChangeListener(null)
             checkBox.isChecked = item.seleccionado
+            
+            checkBox.setOnCheckedChangeListener { _, isChecked ->
+                item.seleccionado = isChecked
+                onCheckBoxClick(item.idCaracteristica, isChecked)
+            }
 
             return vista
         }

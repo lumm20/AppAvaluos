@@ -1,25 +1,38 @@
 package mx.itson.moviles
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
-import android.widget.Toast
+import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 
+/**
+ * Fragment para mostrar opciones de características de avalúos.
+ */
 class OpcionesCaracteristicas : Fragment() {
     private var opcion: String? = null
     private var folio: String? = null
+    private var esTipoInstalacion: Boolean = false
+    private lateinit var recyclerView: RecyclerView
+    
+    // Lista de opciones para mostrar
+    private val opciones = mutableListOf<OpcionCaracteristica>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        // Retrieve arguments passed to the fragment
         arguments?.let {
-            opcion = it.getString("opcion")
-            folio = it.getString("folio")
+            opcion = it.getString(ARG_OPCION)
+            folio = it.getString(ARG_FOLIO)
+            esTipoInstalacion = it.getBoolean(ARG_ES_TIPO_INSTALACION, false)
         }
     }
 
@@ -28,76 +41,145 @@ class OpcionesCaracteristicas : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        val view = inflater.inflate(R.layout.fragment_opciones_caracteristicas, container, false)
+        // Inflate el layout según el tipo de opciones
+        val layoutId = if (esTipoInstalacion) 
+            R.layout.fragment_opciones_caracteristicas2 
+        else 
+            R.layout.fragment_opciones_caracteristicas
+            
+        val view = inflater.inflate(layoutId, container, false)
 
-        // Find TextViews
+        // Configurar título y folio
         val txtTitulo: TextView = view.findViewById(R.id.txtTitulo)
         val txtFolio: TextView = view.findViewById(R.id.txtFolio)
+        val btnBack: ImageButton = view.findViewById(R.id.btn_back)
 
-        // Set TextViews
-        txtTitulo.text = "Características del $opcion"
-        txtFolio.text = "Folio: $folio"
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
-        // Find Buttons
-        val btnSala: Button = view.findViewById(R.id.btnSala)
-        val btnCome: Button = view.findViewById(R.id.btnComedor)
-        val btnCocina: Button = view.findViewById(R.id.btnCocina)
-        val btnBano: Button = view.findViewById(R.id.btnBano)
-        val btnRecamara: Button = view.findViewById(R.id.btnRecamara)
-        val btnEstancia: Button = view.findViewById(R.id.btnEstancia)
-        val btnPatioP: Button = view.findViewById(R.id.btnPatioP)
-        val btnEstac: Button = view.findViewById(R.id.btnEstac)
-        val btnTerraza: Button = view.findViewById(R.id.btnTerraza)
+        if (esTipoInstalacion) {
+            txtTitulo.setText(R.string.caracteristicas_entorno)
+        } else {
+            txtTitulo.setText(R.string.caracteristicas_inmueble)
+        }
+        txtFolio.text = getString(R.string.folio_placeholder, folio)
+
+        // Inicializar las opciones según el tipo
+        inicializarOpciones()
+
+        // Configurar RecyclerView para ambos tipos
+        recyclerView = view.findViewById(R.id.recyclerCaracteristicas)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = OpcionAdapter(requireContext(), opciones) { opcion ->
+            navegarACaracteristicas(opcion)
+        }
+
+        // Configurar botón Aceptar
         val btnAceptar: Button = view.findViewById(R.id.btnAceptar)
-
-        // Load characteristics for some buttons
-        cargarCaracteristicas(btnSala, 1, "Sala")
-        cargarCaracteristicas(btnCome, 2, "Comedor")
-        cargarCaracteristicas(btnCocina, 3, "Cocina")
-        cargarCaracteristicas(btnBano, 4, "Baño")
-        cargarCaracteristicas(btnRecamara, 5, "Recamara")
-        cargarCaracteristicas(btnEstancia, 6, "Estancia")
-        cargarCaracteristicas(btnPatioP, 7, "Patio posterior")
-        cargarCaracteristicas(btnEstac, 8, "Estacionamiento")
-        cargarCaracteristicas(btnTerraza, 9, "Terraza")
-
         btnAceptar.setOnClickListener {
-            Toast.makeText(context, "Guardado con éxito", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.guardado_exito), Toast.LENGTH_SHORT).show()
             parentFragmentManager.popBackStack()
         }
 
         return view
     }
 
-    private fun cargarCaracteristicas(btn: Button, id: Int, desc: String) {
-        btn.setOnClickListener {
-            val fragment = CaracteristicasAvaluo().apply {
-                arguments = Bundle().apply {
-                    putString("desc", desc)
-                    putInt("lugar", id)
-                    putString("tipo", "Pisos")
-                }
-            }
-
-            parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
-                .addToBackStack(null)
-                .commit()
+    private fun inicializarOpciones() {
+        opciones.clear()
+        
+        if (!esTipoInstalacion) {
+            // Opciones para inmueble
+            opciones.add(OpcionCaracteristica(1, getString(R.string.sala), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(2, getString(R.string.comedor), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(3, getString(R.string.cocina), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(4, getString(R.string.bano), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(5, getString(R.string.recamara), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(6, getString(R.string.estancia), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(7, getString(R.string.patio_posterior), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(8, getString(R.string.estacionamiento), R.drawable.ic_home))
+            opciones.add(OpcionCaracteristica(9, getString(R.string.terraza), R.drawable.ic_home))
+        } else {
+            // Opciones para entorno
+            opciones.add(OpcionCaracteristica(10, getString(R.string.instalaciones_hidraulicas), R.drawable.muro))
+            opciones.add(OpcionCaracteristica(11, getString(R.string.instalaciones_sanitarias), R.drawable.muro))
+            opciones.add(OpcionCaracteristica(12, getString(R.string.instalaciones_electricas), R.drawable.muro))
+            opciones.add(OpcionCaracteristica(13, getString(R.string.obras_complementarias), R.drawable.muro))
+            opciones.add(OpcionCaracteristica(14, getString(R.string.elementos_accesorios), R.drawable.muro))
         }
+    }
+
+    private fun navegarACaracteristicas(opcion: OpcionCaracteristica) {
+        val fragment = CaracteristicasAvaluo().apply {
+            arguments = Bundle().apply {
+                putString("desc", opcion.nombre)
+                putInt("lugar", opcion.id)
+                putString("tipo", "Pisos")
+            }
+        }
+
+        parentFragmentManager.beginTransaction()
+            .replace(R.id.fragment_container, fragment)
+            .addToBackStack(null)
+            .commit()
     }
 
     companion object {
         private const val ARG_OPCION = "opcion"
         private const val ARG_FOLIO = "folio"
+        private const val ARG_ES_TIPO_INSTALACION = "esTipoInstalacion"
 
         @JvmStatic
-        fun newInstance(opcion: String, folio: String) =
+        fun newInstance(opcion: String, folio: String, esTipoInstalacion: Boolean = false) =
             OpcionesCaracteristicas().apply {
                 arguments = Bundle().apply {
                     putString(ARG_OPCION, opcion)
                     putString(ARG_FOLIO, folio)
+                    putBoolean(ARG_ES_TIPO_INSTALACION, esTipoInstalacion)
                 }
             }
     }
+}
+
+/**
+ * Modelo para las opciones de características
+ */
+data class OpcionCaracteristica(
+    val id: Int,
+    val nombre: String,
+    val iconoResId: Int
+)
+
+/**
+ * Adaptador para el RecyclerView de opciones de características
+ */
+class OpcionAdapter(
+    private val context: Context,
+    private val opciones: List<OpcionCaracteristica>,
+    private val onItemClick: (OpcionCaracteristica) -> Unit
+) : RecyclerView.Adapter<OpcionAdapter.OpcionViewHolder>() {
+
+    class OpcionViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val icono: ImageView = view.findViewById(R.id.imgCaracteristica)
+        val nombre: TextView = view.findViewById(R.id.txvCarac)
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): OpcionViewHolder {
+        val view = LayoutInflater.from(context).inflate(
+            R.layout.item_opcion_caracteristica, parent, false)
+        return OpcionViewHolder(view)
+    }
+
+    override fun onBindViewHolder(holder: OpcionViewHolder, position: Int) {
+        val opcion = opciones[position]
+        
+        holder.nombre.text = opcion.nombre
+        holder.icono.setImageResource(opcion.iconoResId)
+        
+        holder.itemView.setOnClickListener {
+            onItemClick(opcion)
+        }
+    }
+
+    override fun getItemCount() = opciones.size
 }

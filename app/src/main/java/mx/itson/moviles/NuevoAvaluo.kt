@@ -21,12 +21,11 @@ class NuevoAvaluo : Fragment() {
 
         // Set click listeners
         btnInmuebles.setOnClickListener {
-            val fragment = OpcionesCaracteristicas().apply {
-                arguments = Bundle().apply {
-                    putString("folio", "XX0000111")
-                    putString("opcion", "inmueble")
-                }
-            }
+            val fragment = OpcionesCaracteristicas.newInstance(
+                opcion = "inmueble",
+                folio = "XX0000111",
+                esTipoInstalacion = false
+            )
 
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)
@@ -35,12 +34,11 @@ class NuevoAvaluo : Fragment() {
         }
 
         btnEntorno.setOnClickListener {
-            val fragment = opciones_caracteristicas().apply {
-                arguments = Bundle().apply {
-                    putString("folio", "XX0000111")
-                    putString("opcion", "entorno")
-                }
-            }
+            val fragment = OpcionesCaracteristicas.newInstance(
+                opcion = "entorno",
+                folio = "XX0000111",
+                esTipoInstalacion = true
+            )
 
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, fragment)

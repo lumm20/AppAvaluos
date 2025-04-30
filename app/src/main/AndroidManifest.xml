@@ -13,16 +13,19 @@
         android:theme="@style/Theme.AppAvaluos"
         tools:targetApi="31">
         <activity
+            android:name=".MisAvaluosActivity"
+            android:exported="false" />
+        <activity
+            android:name=".NuevoAvaluoActivity"
+            android:exported="false" />
+        <activity
             android:name=".MainActivity"
             android:exported="false" />
         <activity
-            android:name=".AgregarCaracteristicas"
+            android:name=".CaracteristicasAvaluo"
             android:exported="false" />
         <activity
-            android:name=".AvaluoCaracteristicas"
-            android:exported="false" />
-        <activity
-            android:name=".AvaluoNuevo"
+            android:name=".NuevoAvaluo"
             android:exported="false" />
         <activity
             android:name=".SignIn"

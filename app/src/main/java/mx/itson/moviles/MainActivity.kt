@@ -1,5 +1,6 @@
 package mx.itson.moviles
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -22,7 +23,13 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> replaceFragment(HomeFragment())
                 R.id.nav_citas -> replaceFragment(AgendarCitasFragment())
                 R.id.nav_info -> replaceFragment(InfoFragment())
-                R.id.nav_avaluos -> replaceFragment(NuevoAvaluo())
+                R.id.nav_avaluos -> {
+                    // Lanzar la actividad MisAvaluosActivity en lugar del fragmento NuevoAvaluo
+                    val intent = Intent(this, MisAvaluosActivity::class.java)
+                    startActivity(intent)
+                    // Devolver false para que no se cambie el fragmento seleccionado actualmente
+                    return@setOnItemSelectedListener false
+                }
             }
             true
         }
