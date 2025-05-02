@@ -10,8 +10,6 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:orientation="vertical"
-        android:layout_marginTop="20dp"
-        android:layout_marginBottom="80dp"
         android:background="@color/white">
 
         <LinearLayout
@@ -36,13 +34,14 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
+                android:layout_marginTop="8dp"
                 android:layout_marginBottom="16dp">
 
                 <ImageView
                     android:layout_width="60dp"
                     android:layout_height="60dp"
-                    android:src="@drawable/whale"
-                    android:background="@drawable/circulo_fondo"
+                    android:src="@drawable/ic_home"
+                    android:background="@drawable/circulo_fondo_azul"
                     android:padding="16dp"
                     android:adjustViewBounds="true"
                     android:scaleType="centerInside" />
@@ -52,7 +51,9 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
                 <ImageView
                     android:id="@+id/iconLugar"
                     android:layout_width="40dp"
@@ -64,30 +65,36 @@
                     android:id="@+id/txtTitulo"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="10dp"
+                    android:layout_marginStart="10dp"
                     android:layout_gravity="center"
-                    android:gravity="left"
+                    android:gravity="start"
                     android:text="Características del inmueble"
                     android:textColor="@color/black"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <ListView
                 android:id="@+id/listaCaracteristicas"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:divider="@null"
+                android:dividerHeight="0dp" />
         </LinearLayout>
 
         <Button
             android:id="@+id/btnGuardar"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginTop="10dp"
-            android:layout_marginBottom="10dp"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="@drawable/round_button"
             android:fontFamily="sans-serif-medium"
-            android:text="Guardar" />
+            android:text="Guardar"
+            android:textColor="@color/white" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/secondBottomNavigation"
@@ -99,6 +106,4 @@
             app:layout_behavior="com.google.android.material.behavior.HideBottomViewOnScrollBehavior" />
 
     </LinearLayout>
-
-
 </FrameLayout>

@@ -78,15 +78,47 @@
                 android:layout_gravity="center"/>
 
             <EditText
-                android:id="@+id/user"
+                android:id="@+id/nombre"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="16dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
                 android:background="@drawable/et_background"
-                android:hint="Usuario"
-                android:inputType="text"
+                android:hint="Nombre"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:drawableStart="@drawable/ic_profile"
+                android:drawablePadding="12dp"
+                android:textColorHint="@color/text_hint"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/apellido_paterno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/et_background"
+                android:hint="Apellido Paterno"
+                android:inputType="textPersonName"
+                android:padding="16dp"
+                android:drawableStart="@drawable/ic_profile"
+                android:drawablePadding="12dp"
+                android:textColorHint="@color/text_hint"
+                android:layout_gravity="center"/>
+
+            <EditText
+                android:id="@+id/apellido_materno"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="16dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="40dp"
+                android:background="@drawable/et_background"
+                android:hint="Apellido Materno"
+                android:inputType="textPersonName"
                 android:padding="16dp"
                 android:drawableStart="@drawable/ic_profile"
                 android:drawablePadding="12dp"
