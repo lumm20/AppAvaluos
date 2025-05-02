@@ -7,12 +7,19 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import androidx.cardview.widget.CardView
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.FirebaseDatabase
+import com.google.firebase.database.ValueEventListener
 
 class HomeFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     private var isProfileOptionsVisible = false
+    private lateinit var auth: FirebaseAuth
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -20,6 +27,8 @@ class HomeFragment : Fragment() {
             param1 = it.getString("param1")
             param2 = it.getString("param2")
         }
+        // Inicializar Firebase Authentication
+        auth = FirebaseAuth.getInstance()
     }
 
     override fun onCreateView(
@@ -34,6 +43,9 @@ class HomeFragment : Fragment() {
         val btnEditarPerfil = view.findViewById<Button>(R.id.btnEditarPerfil)
         val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesion)
         val btnNuevoAvaluo = view.findViewById<Button>(R.id.btnNuevoAvaluo)
+        val tvUserName = view.findViewById<TextView>(R.id.tvUserName)
+
+        loadUserData(tvUserName)
 
         profileIcon.setOnClickListener {
             isProfileOptionsVisible = !isProfileOptionsVisible
@@ -69,6 +81,29 @@ class HomeFragment : Fragment() {
         }
 
         return view
+    }
+
+    private fun loadUserData(tvUserName: TextView) {
+        val user = auth.currentUser
+        user?.let {
+            val userId = user.uid
+            val database = FirebaseDatabase.getInstance().reference
+            val userRef = database.child("users").child(userId)
+
+            userRef.addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    if (snapshot.exists()) {
+                        val nombre = snapshot.child("nombre").getValue(String::class.java) ?: ""
+                        val apellidoPaterno = snapshot.child("apellidoPaterno").getValue(String::class.java) ?: ""
+                        val nombreCompleto = "$nombre $apellidoPaterno"
+                        tvUserName.text = nombreCompleto
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                }
+            })
+        }
     }
 
     companion object {

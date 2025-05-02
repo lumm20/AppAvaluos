@@ -24,10 +24,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_citas -> replaceFragment(AgendarCitasFragment())
                 R.id.nav_info -> replaceFragment(InfoFragment())
                 R.id.nav_avaluos -> {
-                    // Lanzar la actividad MisAvaluosActivity en lugar del fragmento NuevoAvaluo
                     val intent = Intent(this, MisAvaluosActivity::class.java)
                     startActivity(intent)
-                    // Devolver false para que no se cambie el fragmento seleccionado actualmente
                     return@setOnItemSelectedListener false
                 }
             }

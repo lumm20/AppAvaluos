@@ -86,37 +86,81 @@
                 android:padding="8dp"
                 android:layout_marginBottom="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Contraseña actual"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/etOldPassword"
+            <!-- Botón para mostrar/ocultar campos de contraseña -->
+            <Button
+                android:id="@+id/btnShowPasswordFields"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
+                android:text="Cambiar contraseña"
                 android:textSize="16sp"
-                android:padding="8dp"
+                android:backgroundTint="@color/primary_light"
                 android:layout_marginBottom="16dp" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Nueva contraseña"
-                android:textSize="16sp"
-                android:textColor="@color/black" />
-
-            <EditText
-                android:id="@+id/etNewPassword"
+            <!-- Sección de cambio de contraseña (inicialmente oculta) -->
+            <LinearLayout
+                android:id="@+id/passwordSection"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textPassword"
-                android:textSize="16sp"
-                android:padding="8dp"
-                android:layout_marginBottom="16dp" />
+                android:orientation="vertical"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contraseña actual"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etOldPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Nueva contraseña"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etNewPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Confirmar nueva contraseña"
+                    android:textSize="16sp"
+                    android:textColor="@color/black" />
+
+                <EditText
+                    android:id="@+id/etConfirmNewPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPassword"
+                    android:textSize="16sp"
+                    android:padding="8dp"
+                    android:layout_marginBottom="16dp" />
+
+                <!-- Mensaje de error para las contraseñas -->
+                <TextView
+                    android:id="@+id/tvPasswordError"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/error"
+                    android:visibility="gone"
+                    android:layout_marginBottom="16dp" />
+            </LinearLayout>
 
             <!-- Botón Guardar -->
             <Button

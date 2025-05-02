@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import mx.itson.moviles.modelo.Avaluo
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -32,22 +33,18 @@ class AvaluoAdapter(
     override fun onBindViewHolder(holder: AvaluoViewHolder, position: Int) {
         val avaluo = avaluos[position]
         
-        // Formatear la fecha
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-        val fechaFormateada = dateFormat.format(avaluo.fecha_registro)
+        val fechaFormateada = dateFormat.format(avaluo.fechaRegistro)
         
-        // Establecer valores
         holder.txtFolio.text = avaluo.folio
         holder.txtFecha.text = "Fecha: $fechaFormateada"
         
-        // Mostrar cantidad de características
-        val cantidadInmueble = avaluo.caracteristicas_inmueble.size
-        val cantidadEntorno = avaluo.caracteristicas_entorno.size
+        val cantidadInmueble = avaluo.caracteristicasInmueble.size
+        val cantidadEntorno = avaluo.caracteristicasEntorno.size
         
         holder.txtCantidadInmueble.text = "$cantidadInmueble características del inmueble"
         holder.txtCantidadEntorno.text = "$cantidadEntorno características del entorno"
-        
-        // Establecer acción de clic
+
         holder.cardView.setOnClickListener {
             onItemClick(avaluo)
         }

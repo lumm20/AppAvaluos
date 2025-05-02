@@ -10,6 +10,9 @@ import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.RecyclerView
+import mx.itson.moviles.modelo.Avaluo
+import mx.itson.moviles.modelo.CaracteristicaEntorno
+import mx.itson.moviles.modelo.CaracteristicaInmueble
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -40,49 +43,44 @@ class AvaluoConfirmacionFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_avaluo_confirmacion, container, false)
 
-        // Configurar vistas
         val txtFolio: TextView = view.findViewById(R.id.txtFolioResumen)
         val txtFecha: TextView = view.findViewById(R.id.txtFechaResumen)
         val containerInmueble: LinearLayout = view.findViewById(R.id.containerCaracteristicasInmueble)
         val containerEntorno: LinearLayout = view.findViewById(R.id.containerCaracteristicasEntorno)
         val btnVolver: Button = view.findViewById(R.id.btnVolver)
 
-        // Mostrar información del avalúo
         avaluo?.let { av ->
             txtFolio.text = "Folio: ${av.folio}"
             
-            // Formatear fecha
             val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            txtFecha.text = "Fecha: ${dateFormat.format(av.fecha_registro)}"
+            txtFecha.text = "Fecha: ${dateFormat.format(av.fechaRegistro)}"
 
             // Mostrar características del inmueble
-            av.caracteristicas_inmueble.forEach { caracteristica ->
+            av.caracteristicasInmueble.forEach { caracteristica ->
                 val itemView = inflater.inflate(R.layout.item_caracteristica_resumen, containerInmueble, false)
                 val txtTipo: TextView = itemView.findViewById(R.id.txtTipo)
                 val txtDetalles: TextView = itemView.findViewById(R.id.txtDetalles)
                 
-                txtTipo.text = caracteristica.tipo
-                txtDetalles.text = "Ubicación: ${caracteristica.ubicacion}, Uso: ${caracteristica.uso}"
+                txtTipo.text = caracteristica.nombre
+                txtDetalles.text = "Zona: ${caracteristica.zona}, Categoría: ${caracteristica.categoria}"
                 
                 containerInmueble.addView(itemView)
             }
             
             // Mostrar características del entorno
-            av.caracteristicas_entorno.forEach { caracteristica ->
+            av.caracteristicasEntorno.forEach { caracteristica ->
                 val itemView = inflater.inflate(R.layout.item_caracteristica_resumen, containerEntorno, false)
                 val txtTipo: TextView = itemView.findViewById(R.id.txtTipo)
                 val txtDetalles: TextView = itemView.findViewById(R.id.txtDetalles)
                 
-                txtTipo.text = caracteristica.cercania
-                txtDetalles.text = "Tipo de zona: ${caracteristica.tipo_zona}, Uso: ${caracteristica.uso}"
+                txtTipo.text = caracteristica.nombre
+                txtDetalles.text = "Tipo: ${caracteristica.tipo}, Categoría: ${caracteristica.categoria}"
                 
                 containerEntorno.addView(itemView)
             }
         }
 
-        // Configurar botón volver
         btnVolver.setOnClickListener {
-            // Volver a la pantalla principal
             activity?.finish()
         }
 
@@ -95,7 +93,7 @@ class AvaluoConfirmacionFragment : Fragment() {
  */
 class CaracteristicaInmuebleAdapter(
     private val context: android.content.Context,
-    private val caracteristicas: List<CaracteristicasInmueble>
+    private val caracteristicas: List<CaracteristicaInmueble>
 ) : RecyclerView.Adapter<CaracteristicaInmuebleAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -111,8 +109,8 @@ class CaracteristicaInmuebleAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val caracteristica = caracteristicas[position]
-        holder.txtTipo.text = caracteristica.tipo
-        holder.txtDetalles.text = "Ubicación: ${caracteristica.ubicacion}, Uso: ${caracteristica.uso}"
+        holder.txtTipo.text = caracteristica.nombre
+        holder.txtDetalles.text = "Zona: ${caracteristica.zona}, Categoría: ${caracteristica.categoria}"
     }
 
     override fun getItemCount() = caracteristicas.size
@@ -123,7 +121,7 @@ class CaracteristicaInmuebleAdapter(
  */
 class CaracteristicaEntornoAdapter(
     private val context: android.content.Context,
-    private val caracteristicas: List<CaracteristicasEntorno>
+    private val caracteristicas: List<CaracteristicaEntorno>
 ) : RecyclerView.Adapter<CaracteristicaEntornoAdapter.ViewHolder>() {
 
     class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
@@ -139,8 +137,8 @@ class CaracteristicaEntornoAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val caracteristica = caracteristicas[position]
-        holder.txtTipo.text = caracteristica.cercania
-        holder.txtDetalles.text = "Tipo de zona: ${caracteristica.tipo_zona}, Uso: ${caracteristica.uso}"
+        holder.txtTipo.text = caracteristica.nombre
+        holder.txtDetalles.text = "Tipo: ${caracteristica.tipo}, Categoría: ${caracteristica.categoria}"
     }
 
     override fun getItemCount() = caracteristicas.size
