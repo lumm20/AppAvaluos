@@ -128,7 +128,7 @@
                 android:textSize="20sp" />
 
             <!-- Teléfono -->
-            <EditText
+            <TextView
                 android:id="@+id/dirección_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

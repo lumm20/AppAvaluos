@@ -76,7 +76,7 @@ class MisAvaluos2 : Fragment() {
 
 
         adapter = AvaluoAdapter(requireContext(), avaluos) { avaluo ->
-            val intent = Intent(requireContext(), NuevoAvaluoActivity::class.java)
+            val intent = Intent(requireContext(), ActualizarAvaluo::class.java)
             intent.putExtra("folio", avaluo.folio)
             startActivity(intent)
         }
@@ -162,7 +162,7 @@ class MisAvaluos2 : Fragment() {
                             correoUsuario = correoUsuario,
                             caracteristicasInmueble = caracteristicasInmueble,
                             caracteristicasEntorno = caracteristicasEntorno,
-                            //direccion = null
+                            direccion = null
                             ////////////////////////////////////////////////////////////////////////////////////
                         ))
                     }

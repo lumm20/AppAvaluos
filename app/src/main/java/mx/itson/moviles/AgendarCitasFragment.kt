@@ -5,10 +5,12 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.AdapterView
 import android.widget.ArrayAdapter
 import android.widget.Button
 import android.widget.EditText
 import android.widget.Spinner
+import android.widget.TextView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import com.google.firebase.auth.FirebaseAuth
@@ -19,6 +21,7 @@ import com.google.firebase.database.ValueEventListener
 import mx.itson.moviles.CitaRegistradaFragment
 import mx.itson.moviles.R
 import mx.itson.moviles.modelo.Cita
+import mx.itson.moviles.modelo.Direccion
 import java.util.UUID
 import java.text.SimpleDateFormat
 import java.util.Calendar
@@ -34,10 +37,14 @@ class AgendarCitasFragment : Fragment() {
     private lateinit var telefonoEt: EditText
     private lateinit var fechaEt: EditText
     private lateinit var horaEt: EditText
+    private lateinit var direccionTv: TextView
     private lateinit var siguienteBtn: Button
 
     private var fechaSeleccionada: Date? = null
     private var horaSeleccionada: String? = null
+
+    // Mapa para almacenar folios y sus direcciones correspondientes
+    private val foliosDirecciones = mutableMapOf<String, String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,7 +56,21 @@ class AgendarCitasFragment : Fragment() {
         telefonoEt = view.findViewById(R.id.telefono_et)
         fechaEt = view.findViewById(R.id.fecha_et)
         horaEt = view.findViewById(R.id.hora_et)
+        direccionTv = view.findViewById(R.id.dirección_et)  // Asegúrate de que el ID sea correcto
         siguienteBtn = view.findViewById(R.id.siguiente_btn)
+
+        // Configurar el listener para el spinner
+        avaluoSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
+            override fun onItemSelected(parent: AdapterView<*>?, view: View?, position: Int, id: Long) {
+                val folioSeleccionado = parent?.getItemAtPosition(position).toString()
+                // Actualizar el campo de dirección con la dirección correspondiente al folio
+                actualizarDireccion(folioSeleccionado)
+            }
+
+            override fun onNothingSelected(parent: AdapterView<*>?) {
+                // No hacer nada
+            }
+        }
 
         cargarFoliosAvaluosFirebase()
 
@@ -124,13 +145,28 @@ class AgendarCitasFragment : Fragment() {
         avaluosRef.addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val folios = mutableListOf<String>()
-               for (avaluoSnapshot in snapshot.children) {
-                    val folio = avaluoSnapshot.child("folio").getValue(String::class.java)
-                    folio?.let { folios.add(it) }
+                foliosDirecciones.clear() // Limpiar el mapa antes de agregar nuevos valores
 
+                for (avaluoSnapshot in snapshot.children) {
+                    val folio = avaluoSnapshot.child("folio").getValue(String::class.java)
+
+                    // Obtener la dirección del avalúo
+                    val direccion = obtenerDireccionDesdeSnapshot(avaluoSnapshot)
+
+                    if (folio != null && direccion != null) {
+                        folios.add(folio)
+                        foliosDirecciones[folio] = direccion
+                        Log.d("AgendarCitas", "Folio: $folio, Dirección: $direccion")
                     }
+                }
+
                 val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, folios)
                 avaluoSpinner.adapter = adapter
+
+                // Si hay elementos, actualizar la dirección con el primer elemento
+                if (folios.isNotEmpty()) {
+                    actualizarDireccion(folios[0])
+                }
             }
 
             override fun onCancelled(error: DatabaseError) {
@@ -138,6 +174,72 @@ class AgendarCitasFragment : Fragment() {
                 Log.e("Firebase", "Error al cargar avalúos", error.toException())
             }
         })
+    }
+
+    // Función para extraer la dirección del snapshot de avalúo adaptada a tu modelo de datos
+    private fun obtenerDireccionDesdeSnapshot(snapshot: DataSnapshot): String? {
+        // Intentar obtener el objeto Direccion completo
+        val direccionSnapshot = snapshot.child("direccion")
+        if (direccionSnapshot.exists()) {
+            try {
+                // Intenta convertir a objeto Direccion (si la estructura coincide)
+                val direccion = direccionSnapshot.getValue(Direccion::class.java)
+                if (direccion != null) {
+                    // Formatea la dirección usando los campos del modelo Direccion
+                    return formatearDireccion(direccion)
+                } else {
+                    // Si no se pudo convertir a objeto, intenta leer campo por campo
+                    val calle = direccionSnapshot.child("calle").getValue(String::class.java) ?: ""
+                    val numeroExterior = direccionSnapshot.child("numeroExterior").getValue(String::class.java) ?: ""
+                    val numeroInterior = direccionSnapshot.child("numeroInterior").getValue(String::class.java) ?: ""
+                    val ciudad = direccionSnapshot.child("ciudad").getValue(String::class.java) ?: ""
+                    val codigoPostal = direccionSnapshot.child("codigoPostal").getValue(String::class.java) ?: ""
+
+                    return formatearDireccionManual(calle, numeroExterior, numeroInterior, ciudad, codigoPostal)
+                }
+            } catch (e: Exception) {
+                Log.e("AgendarCitas", "Error al convertir dirección", e)
+            }
+        }
+
+
+        // Si no se encuentra en ningún lado, devolver un valor por defecto
+        return "No disponible"
+    }
+
+    // Formatea una dirección a partir del objeto Direccion
+    private fun formatearDireccion(direccion: Direccion): String {
+        val interior = if (direccion.numeroInterior.isNotEmpty()) {
+            " Int. ${direccion.numeroInterior}"
+        } else {
+            ""
+        }
+
+        return "${direccion.calle} ${direccion.numeroExterior}$interior, ${direccion.ciudad}, CP ${direccion.codigoPostal}"
+    }
+
+    // Formatea una dirección a partir de campos individuales
+    private fun formatearDireccionManual(
+        calle: String,
+        numeroExterior: String,
+        numeroInterior: String,
+        ciudad: String,
+        codigoPostal: String
+    ): String {
+        val interior = if (numeroInterior.isNotEmpty()) {
+            " Int. $numeroInterior"
+        } else {
+            ""
+        }
+
+        return "$calle $numeroExterior$interior, $ciudad, CP $codigoPostal"
+    }
+
+    // Función para actualizar el campo de dirección con la dirección correspondiente al folio seleccionado
+    private fun actualizarDireccion(folioSeleccionado: String) {
+        val direccion = foliosDirecciones[folioSeleccionado] ?: "No disponible"
+        direccionTv.text = direccion
+        Log.d("AgendarCitas", "Actualizando dirección para folio $folioSeleccionado: $direccion")
     }
 
     private fun guardarCitaFirebase() {
@@ -171,21 +273,21 @@ class AgendarCitasFragment : Fragment() {
         val nuevoFolioCita = generarFolioCita()
 
         val nuevaCita = Cita(
+            id = null,  // Firebase generará el ID
             fechaRegistro = System.currentTimeMillis(),
             fechaVisita = fechaVisitaTimestamp,
             telefonoContacto = telefono,
             correoContacto = correo,
             folioAvaluo = folioAvaluoSeleccionado,
             empresa = null,
-            usuarioId = usuarioIdActual.toString(),
+            usuarioId = usuarioIdActual,
             folioCita = nuevoFolioCita
         )
 
         val citasRef = db.getReference("citas")
-        citasRef.push().setValue(nuevaCita)
+        citasRef.child(nuevoFolioCita).setValue(nuevaCita)
             .addOnSuccessListener {
                 Toast.makeText(requireContext(), "Cita agendada con éxito", Toast.LENGTH_SHORT).show()
-                val nuevoFolioCita = generarFolioCita()
                 navegarACitaRegistrada(nuevoFolioCita)
             }
             .addOnFailureListener { e ->

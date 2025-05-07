@@ -12,7 +12,8 @@ data class Avaluo(
     val usuarioId: String = "",
     val correoUsuario: String = "",
     val caracteristicasInmueble: MutableList<CaracteristicaInmueble> = mutableListOf(),
-    val caracteristicasEntorno: MutableList<CaracteristicaEntorno> = mutableListOf()
+    val caracteristicasEntorno: MutableList<CaracteristicaEntorno> = mutableListOf(),
+    val direccion: Direccion?
 ) : Serializable{
 
 }

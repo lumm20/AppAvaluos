@@ -32,17 +32,6 @@ data class CaracteristicasEntorno(
     val uso: String
 ) : Serializable
 
-/**
- * Modelo de datos para una Dirección
- */
-data class Direccion(
-    val id: String,
-    val calle: String,
-    val numero_exterior: String,
-    val numero_interior: String,
-    val ciudad: String,
-    val codigo_postal: String
-) : Serializable
 
 /**
  * Modelo de datos para una Cita

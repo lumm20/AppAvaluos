@@ -2,96 +2,68 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
-    android:background="@color/white"
-    android:padding="16dp">
+    android:background="@color/white">
 
-    <!-- Título "Mis citas" -->
-    <TextView
-        android:id="@+id/txtMisCitas"
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Mis citas"
-        android:textSize="24sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:gravity="center"
-        android:layout_marginBottom="16dp" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="@color/primary"
+        android:elevation="4dp">
 
-    <!-- Sección "Avalúo para crédito" -->
-    <TextView
-        android:id="@+id/txtAvaluoCredito"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageButton
+                android:id="@+id/btnBack"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:src="@drawable/flecha_atras"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:adjustViewBounds="true"
+                android:scaleType="centerInside"
+                android:contentDescription="@string/btn_back"
+                app:tint="@color/white" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:text="Mis Citas"
+                android:textColor="@color/white"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+    </androidx.appcompat.widget.Toolbar>
+
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Avalúo para crédito"
-        android:textSize="18sp"
-        android:textStyle="bold"
-        android:textColor="@color/black"
-        android:layout_marginTop="16dp" />
+        android:layout_height="match_parent">
 
-    <!-- Día -->
-    <TextView
-        android:id="@+id/txtDiaLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Día"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="8dp" />
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerCitas"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="8dp"
+            android:clipToPadding="false"
+            android:paddingBottom="80dp"
+            tools:listitem="@layout/item_cita" />
 
-    <TextView
-        android:id="@+id/txtDia"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="XXXXXXXXXX"
-        android:textSize="16sp"
-        android:textColor="@color/black" />
+        <TextView
+            android:id="@+id/txtEmptyStateC"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="No tienes citas registradas"
+            android:textColor="@color/text_secondary"
+            android:textSize="16sp"
+            android:visibility="gone" />
 
-    <!-- Empresa -->
-    <TextView
-        android:id="@+id/txtEmpresaLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Empresa"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/txtEmpresa"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="XXXXXXXXXX"
-        android:textSize="16sp"
-        android:textColor="@color/black" />
-
-    <!-- Trámite -->
-    <TextView
-        android:id="@+id/txtTramiteLabel"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Trámite"
-        android:textSize="16sp"
-        android:textColor="@color/black"
-        android:layout_marginTop="8dp" />
-
-    <TextView
-        android:id="@+id/txtTramite"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="XXXXXXXXXX"
-        android:textSize="16sp"
-        android:textColor="@color/black" />
-
-    <!-- Botón Cancelar -->
-    <Button
-        android:id="@+id/btnCancelar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="end"
-        android:layout_marginTop="16dp"
-        android:text="Cancelar"
-        android:textColor="@color/white"
-        android:backgroundTint="#FF4081" />
-
+    </FrameLayout>
 </LinearLayout>

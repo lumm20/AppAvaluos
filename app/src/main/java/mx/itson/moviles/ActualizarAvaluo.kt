@@ -3,13 +3,15 @@ package mx.itson.moviles
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
-import android.widget.EditText
 import android.widget.ImageButton
 import android.widget.LinearLayout
 import android.widget.ScrollView
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.ViewCompat
+import androidx.core.view.WindowInsetsCompat
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import mx.itson.moviles.modelo.Avaluo
@@ -17,17 +19,18 @@ import mx.itson.moviles.modelo.CaracteristicaEntorno
 import mx.itson.moviles.modelo.CaracteristicaInmueble
 import mx.itson.moviles.modelo.Direccion
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Date
+import java.util.Locale
 
-class NuevoAvaluoActivity : AppCompatActivity() {
+class ActualizarAvaluo : AppCompatActivity() {
     private var folio: String? = null
     private var avaluo: Avaluo? = null
     private lateinit var auth: FirebaseAuth
     private lateinit var database: FirebaseDatabase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_nuevo_avaluo)
+        enableEdgeToEdge()
+        setContentView(R.layout.activity_actualizar_avaluo)
 
         auth = FirebaseAuth.getInstance()
         database = FirebaseDatabase.getInstance()
@@ -38,35 +41,20 @@ class NuevoAvaluoActivity : AppCompatActivity() {
         val btnContinuar: Button = findViewById(R.id.btnContinuar)
         val txtFolio: TextView = findViewById(R.id.txtFolio)
 
+        // Revisar si es un avalúo existente o nuevo
+        folio = intent.getStringExtra("folio")
 
-            val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
-            val today = dateFormat.format(Date())
-            val random = (100..999).random()
-            folio = "AV$today$random"
 
-            val currentUser = auth.currentUser
-            if (currentUser != null) {
-                avaluo = Avaluo(
-                    folio = folio!!,
-                    fechaRegistro = System.currentTimeMillis(),
-                    usuarioId = currentUser.uid,
-                    correoUsuario = currentUser.email ?: "",
-                    direccion = null
-                )
-            } else {
-                Toast.makeText(this, "Debe iniciar sesión para crear avalúos", Toast.LENGTH_SHORT).show()
-                finish()
-                return
-            }
+            loadExistingAvaluo(folio!!)
 
 
         txtFolio.text = "Folio: $folio"
-        
+
 
         btnBack.setOnClickListener {
             finish()
         }
-        
+
         btnInmueble.setOnClickListener {
             val fragment = OpcionesCaracteristicas.newInstance("inmueble", folio!!, false)
             supportFragmentManager.beginTransaction()
@@ -74,7 +62,7 @@ class NuevoAvaluoActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
-        
+
         btnEntorno.setOnClickListener {
             val fragment = OpcionesCaracteristicas.newInstance("entorno", folio!!, true)
             supportFragmentManager.beginTransaction()
@@ -82,27 +70,86 @@ class NuevoAvaluoActivity : AppCompatActivity() {
                 .addToBackStack(null)
                 .commit()
         }
-        
+
         btnContinuar.setOnClickListener {
             saveAvaluo()
         }
 
-        val expandDireccionBtn: Button = findViewById(R.id.expand_direccion_btn)
-        val direccionLayout: LinearLayout = findViewById(R.id.direccion_layout)
 
-        expandDireccionBtn.setOnClickListener {
-            direccionLayout.visibility = if (direccionLayout.visibility == View.GONE) View.VISIBLE else View.GONE
+    }
+
+    private fun loadExistingAvaluo(folio: String) {
+        val avaluosRef = database.getReference("avaluos").child(folio)
+
+        avaluosRef.get().addOnSuccessListener { snapshot ->
+            if (snapshot.exists()) {
+                val fechaRegistroLong = snapshot.child("fechaRegistro").getValue(Long::class.java) ?: System.currentTimeMillis()
+                val fechaRegistro = Date(fechaRegistroLong)
+                val usuarioId = snapshot.child("usuarioId").getValue(String::class.java) ?: ""
+                val correoUsuario = snapshot.child("correoUsuario").getValue(String::class.java) ?: ""
+                val direccionSnapshot = snapshot.child("direccion")
+                val direccion: Direccion? = direccionSnapshot.getValue(Direccion::class.java)
+
+                val caracteristicasInmueble = mutableListOf<CaracteristicaInmueble>()
+                val caracteristicasEntorno = mutableListOf<CaracteristicaEntorno>()
+
+                snapshot.child("caracteristicasInmueble").children.forEach { carSnapshot ->
+                    val zona = carSnapshot.child("zona").getValue(String::class.java) ?: ""
+                    val nombre = carSnapshot.child("nombre").getValue(String::class.java) ?: ""
+                    val categoria = carSnapshot.child("categoria").getValue(String::class.java) ?: ""
+
+                    caracteristicasInmueble.add(
+                        CaracteristicaInmueble(
+                        id = carSnapshot.key ?: "",
+                        zona = zona,
+                        nombre = nombre,
+                        categoria = categoria
+                    )
+                    )
+                }
+
+                snapshot.child("caracteristicasEntorno").children.forEach { carSnapshot ->
+                    val tipo = carSnapshot.child("tipo").getValue(String::class.java) ?: ""
+                    val nombre = carSnapshot.child("nombre").getValue(String::class.java) ?: ""
+                    val categoria = carSnapshot.child("categoria").getValue(String::class.java) ?: ""
+
+                    caracteristicasEntorno.add(
+                        CaracteristicaEntorno(
+                        id = carSnapshot.key ?: "",
+                        tipo = tipo,
+                        nombre = nombre,
+                        categoria = categoria
+                    )
+                    )
+                }
+
+                avaluo = Avaluo(
+                    folio = folio,
+                    fechaRegistro = fechaRegistroLong,
+                    usuarioId = usuarioId,
+                    correoUsuario = correoUsuario,
+                    caracteristicasInmueble = caracteristicasInmueble,
+                    caracteristicasEntorno = caracteristicasEntorno,
+                    direccion = direccion
+                )
+
+                if (auth.currentUser?.uid != usuarioId) {
+                    Toast.makeText(this, "Este avalúo pertenece a otro usuario", Toast.LENGTH_SHORT).show()
+                    finish()
+                }
+            } else {
+                Toast.makeText(this, "No se encontró el avalúo", Toast.LENGTH_SHORT).show()
+                finish()
+            }
+        }.addOnFailureListener { exception ->
+            Toast.makeText(this, "Error al cargar el avalúo: ${exception.message}", Toast.LENGTH_SHORT).show()
+            finish()
         }
     }
 
     private fun saveAvaluo() {
         if (avaluo == null) {
             Toast.makeText(this, "Error: no se pudo crear el avalúo", Toast.LENGTH_SHORT).show()
-            return
-        }
-        val campos = validarCamposDireccion()
-        if(campos != null){
-            Toast.makeText(this, campos, Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -114,8 +161,7 @@ class NuevoAvaluoActivity : AppCompatActivity() {
             "folio" to avaluo!!.folio,
             "fechaRegistro" to avaluo!!.fechaRegistro,
             "usuarioId" to avaluo!!.usuarioId,
-            "correoUsuario" to avaluo!!.correoUsuario,
-            "direccion" to createDireccion()
+            "correoUsuario" to avaluo!!.correoUsuario
         )
 
         avaluosRef.child(avaluo!!.folio).updateChildren(avaluoData)
@@ -131,37 +177,6 @@ class NuevoAvaluoActivity : AppCompatActivity() {
             .addOnFailureListener { exception ->
                 Toast.makeText(this, "Error al guardar el avalúo: ${exception.message}", Toast.LENGTH_SHORT).show()
             }
-    }
-
-    private fun validarCamposDireccion(): String? {
-        val calleEditText: EditText = findViewById(R.id.calle_et)
-        val numeroExteriorEditText: EditText = findViewById(R.id.numero_exterior_et)
-        val ciudadEditText: EditText = findViewById(R.id.ciudad_et)
-        val codigoPostalEditText: EditText = findViewById(R.id.codigo_postal_et)
-
-        val calle = calleEditText.text.toString().trim()
-        val numeroExterior = numeroExteriorEditText.text.toString().trim()
-        val ciudad = ciudadEditText.text.toString().trim()
-        val codigoPostal = codigoPostalEditText.text.toString().trim()
-
-
-        if (calle.isEmpty()) {
-            return "Campo Calle requerido falta"
-        }
-
-        if (numeroExterior.isEmpty()) {
-            return "Campo Número Exterior requerido falta"
-        }
-
-        if (ciudad.isEmpty()) {
-            return "Campo Ciudad requerido falta"
-        }
-
-        if (codigoPostal.isEmpty()) {
-            return "Campo Código Postal requerido falta"
-        }
-        // Si todos los campos requeridos son válidos, devuelve null
-        return null
     }
 
     private fun convertirCaracteristicasSeleccionadas() {
@@ -271,32 +286,6 @@ class NuevoAvaluoActivity : AppCompatActivity() {
                 caracteristicasRef.child(caracteristicaId).setValue(caracteristicaData)
             }
         }
-    }
-
-    private fun createDireccion(): Direccion {
-        val calleEditText: EditText = findViewById(R.id.calle_et)
-        val numeroExteriorEditText: EditText = findViewById(R.id.numero_exterior_et)
-        val numeroInteriorEditText: EditText = findViewById(R.id.numero_interior_et)
-        val ciudadEditText: EditText = findViewById(R.id.ciudad_et)
-        val codigoPostalEditText: EditText = findViewById(R.id.codigo_postal_et)
-
-        val calle = calleEditText.text.toString()
-        val numeroExterior = numeroExteriorEditText.text.toString()
-        val numeroInterior = numeroInteriorEditText.text.toString()
-        val ciudad = ciudadEditText.text.toString()
-        val codigoPostal = codigoPostalEditText.text.toString()
-
-        // Generar un ID único para la dirección. Podrías usar UUID o cualquier otro método de generación de ID.
-        val id = UUID.randomUUID().toString()
-
-        return Direccion(
-            id = id,
-            calle = calle,
-            numeroExterior = numeroExterior,
-            numeroInterior = numeroInterior,
-            ciudad = ciudad,
-            codigoPostal = codigoPostal
-        )
     }
 
     private fun showConfirmationScreen() {
