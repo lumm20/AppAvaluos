@@ -48,7 +48,7 @@ class NuevoAvaluoActivity : AppCompatActivity() {
             if (currentUser != null) {
                 avaluo = Avaluo(
                     folio = folio!!,
-                    fechaRegistro = Date(),
+                    fechaRegistro = System.currentTimeMillis(),
                     usuarioId = currentUser.uid,
                     correoUsuario = currentUser.email ?: ""
                 )
@@ -130,7 +130,7 @@ class NuevoAvaluoActivity : AppCompatActivity() {
 
                 avaluo = Avaluo(
                     folio = folio,
-                    fechaRegistro = fechaRegistro,
+                    fechaRegistro = fechaRegistroLong,
                     usuarioId = usuarioId,
                     correoUsuario = correoUsuario,
                     caracteristicasInmueble = caracteristicasInmueble,
@@ -163,7 +163,7 @@ class NuevoAvaluoActivity : AppCompatActivity() {
         
         val avaluoData = hashMapOf<String, Any>(
             "folio" to avaluo!!.folio,
-            "fechaRegistro" to avaluo!!.fechaRegistro.time,
+            "fechaRegistro" to avaluo!!.fechaRegistro,
             "usuarioId" to avaluo!!.usuarioId,
             "correoUsuario" to avaluo!!.correoUsuario
         )

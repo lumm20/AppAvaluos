@@ -7,13 +7,15 @@ import java.util.Date
  * Modelo de datos para un avalúo.
  */
 data class Avaluo(
-    val folio: String,
-    val fechaRegistro: Date,
-    val usuarioId: String,
+    val folio: String = "",
+    val fechaRegistro: Long = 0,
+    val usuarioId: String = "",
     val correoUsuario: String = "",
     val caracteristicasInmueble: MutableList<CaracteristicaInmueble> = mutableListOf(),
     val caracteristicasEntorno: MutableList<CaracteristicaEntorno> = mutableListOf()
-) : Serializable
+) : Serializable{
+
+}
 
 /**
  * Modelo de datos para características del inmueble.
@@ -50,12 +52,12 @@ data class Direccion(
 /**
  * Modelo de datos para una cita.
  */
-data class Cita(
-    val id: String,
-    val fechaRegistro: Date,
-    val fechaVisita: Date,
-    val telefonoContacto: String,
-    val correoContacto: String,
-    val direccionId: String,
-    val direccion: Direccion? = null
-) : Serializable
+//data class Cita(
+//    val id: String,
+//    val fechaRegistro: Date,
+//    val fechaVisita: Date,
+//    val telefonoContacto: String,
+//    val correoContacto: String,
+//    val direccionId: String,
+//    val direccion: Direccion? = null
+//) : Serializable

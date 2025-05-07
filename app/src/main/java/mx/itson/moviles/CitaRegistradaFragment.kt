@@ -6,36 +6,36 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.TextView
 import com.google.android.material.bottomnavigation.BottomNavigationView
-
 
 class CitaRegistradaFragment : Fragment() {
 
+    private lateinit var folioTv: TextView
+    private lateinit var volverInicioBtn: Button
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         val view = inflater.inflate(R.layout.fragment_cita_registrada, container, false)
 
-        val btnVolver: Button = view.findViewById(R.id.volver_inicio_btn)
+        folioTv = view.findViewById(R.id.folio_tv)
+        volverInicioBtn = view.findViewById(R.id.volver_inicio_btn)
 
-        val fragment = HomeFragment()
+        val folioCita = arguments?.getString("folioCita")
+        folioTv.text = "Folio: #$folioCita"
 
-        btnVolver.setOnClickListener {
-
+        volverInicioBtn.setOnClickListener {
             val bottomNavigation = requireActivity().findViewById<BottomNavigationView>(R.id.bottomNavigation)
             bottomNavigation.selectedItemId = R.id.nav_home
 
             parentFragmentManager.beginTransaction()
-                .replace(R.id.fragment_container, fragment)
+                .replace(R.id.fragment_container, HomeFragment())
                 .addToBackStack(null)
                 .commit()
         }
 
         return view
     }
-
-
 }

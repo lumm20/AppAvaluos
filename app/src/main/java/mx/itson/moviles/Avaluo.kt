@@ -47,11 +47,11 @@ data class Direccion(
 /**
  * Modelo de datos para una Cita
  */
-data class Cita(
-    val id: String,
-    val fecha_registro: Date,
-    val fecha_visita: Date,
-    val tel_contacto: String,
-    val correo_contacto: String,
-    val direccion: Direccion
-) : Serializable
+//data class Cita(
+//    val id: String,
+//    val fecha_registro: Date,
+//    val fecha_visita: Date,
+//    val tel_contacto: String,
+//    val correo_contacto: String,
+//    val direccion: Direccion
+//) : Serializable

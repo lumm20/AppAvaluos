@@ -7,11 +7,12 @@
     android:orientation="vertical">
 
     <ScrollView
+        android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
         android:clipToPadding="false"
-        android:layout_marginBottom="80dp">
+        android:paddingBottom="80dp">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -53,36 +54,11 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
-                android:layout_marginBottom="16dp"
+                android:layout_marginBottom="10dp"
                 android:gravity="center"
                 android:text="@string/info_personal"
                 android:textColor="@color/black"
-                android:textSize="20sp" />
-
-            <!-- Nombre -->
-            <EditText
-                android:id="@+id/nombre_et"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:hint="@string/hint_nombre"
-                android:inputType="text"
-                android:padding="15dp"
-                android:textColorHint="#757575"
-                android:textSize="18sp" />
-
-            <!-- Información detallada -->
-            <TextView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:layout_marginEnd="15dp"
-                android:layout_marginStart="15dp"
-                android:text="@string/info_detallada"
-                android:textColor="@color/black"
-                android:textSize="20sp" />
+                android:textSize="24sp" />
 
             <!-- Correo -->
             <EditText
@@ -112,16 +88,55 @@
                 android:textColorHint="#757575"
                 android:textSize="18sp" />
 
-            <!-- Dirección -->
-            <EditText
-                android:id="@+id/direccion_et"
+            <!-- Número de Avalúo (ComboBox/Spinner) -->
+            <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="24dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
-                android:hint="@string/hint_direccion"
-                android:inputType="textPostalAddress"
+                android:text="Número de Avalúo"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:background="@drawable/spinner_background"
+                android:padding="2dp">
+
+                <Spinner
+                    android:id="@+id/spinner_avaluos"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:spinnerMode="dropdown"
+                    android:popupBackground="@android:color/white"
+                    android:backgroundTint="@android:color/transparent" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Dirección"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
+            <!-- Teléfono -->
+            <EditText
+                android:id="@+id/dirección_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:enabled="false"
+                android:inputType="phone"
                 android:padding="15dp"
                 android:textColorHint="#757575"
                 android:textSize="18sp" />
@@ -147,6 +162,20 @@
                 android:layout_marginStart="15dp"
                 android:hint="@string/hint_fecha"
                 android:inputType="date"
+                android:padding="15dp"
+                android:textColorHint="#757575"
+                android:textSize="18sp" />
+
+            <!-- Seleccionar hora -->
+            <EditText
+                android:id="@+id/hora_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:hint="Seleccionar hora"
+                android:inputType="time"
                 android:padding="15dp"
                 android:textColorHint="#757575"
                 android:textSize="18sp" />

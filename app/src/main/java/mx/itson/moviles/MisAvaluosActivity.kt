@@ -124,7 +124,7 @@ class MisAvaluosActivity : AppCompatActivity() {
                         
                         avaluos.add(Avaluo(
                             folio = folio,
-                            fechaRegistro = fechaRegistro,
+                            fechaRegistro = fechaRegistroLong,
                             usuarioId = usuarioId,
                             correoUsuario = correoUsuario,
                             caracteristicasInmueble = caracteristicasInmueble,
