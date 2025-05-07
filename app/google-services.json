@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "156043042953",
+    "project_id": "appavaluos-74926",
+    "storage_bucket": "appavaluos-74926.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:156043042953:android:48800395bfce891ce16658",
+        "android_client_info": {
+          "package_name": "mx.itson.moviles"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyByqq5tsBzTD8GuMqrZhE78TecyKNY6wiU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -1,5 +1,6 @@
 package mx.itson.moviles
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.view.ViewGroup
@@ -33,41 +34,16 @@ class MainActivity : AppCompatActivity() {
         bottomNavigation.setOnItemSelectedListener { item ->
             when (item.itemId) {
                 R.id.nav_home -> replaceFragment(HomeFragment())
-                R.id.nav_avaluos-> replaceFragment(AvaluosFragment())
+                R.id.nav_citas -> replaceFragment(AgendarCitasFragment())
+                R.id.nav_info -> replaceFragment(InfoFragment())
+                R.id.nav_avaluos -> {
+                    val intent = Intent(this, MisAvaluosActivity::class.java)
+                    startActivity(intent)
+                    return@setOnItemSelectedListener false
+                }
             }
             true
         }
-
-        val main:ViewGroup = findViewById(R.id.main)
-        val menuView = layoutInflater.inflate(R.layout.profile_menu, main, false)
-        findViewById<CoordinatorLayout>(R.id.main).addView(menuView)
-        profileMenu = menuView.findViewById(R.id.profileMenu)
-        menuPanel = menuView.findViewById(R.id.menuPanel)
-        menuBackground = menuView.findViewById(R.id.menuBackground)
-
-        menuView.findViewById<TextView>(R.id.menuAppointments).setOnClickListener {
-            Toast.makeText(this, "Mis citas", Toast.LENGTH_SHORT).show()
-            hideProfileMenu()
-        }
-
-        menuView.findViewById<TextView>(R.id.menuProcedures).setOnClickListener {
-            Toast.makeText(this, "Mis trámites", Toast.LENGTH_SHORT).show()
-            hideProfileMenu()
-        }
-
-        menuBackground.setOnClickListener {
-            hideProfileMenu()
-        }
-
-//        onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
-//            override fun handleOnBackPressed() {
-//                if (profileMenu.visibility == View.VISIBLE) {
-//                    hideProfileMenu()
-//                } else {
-//                    finish()
-//                }
-//            }
-//        } )
 
     }
 

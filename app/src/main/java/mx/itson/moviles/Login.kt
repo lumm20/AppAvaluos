@@ -11,32 +11,53 @@ import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
-import kotlin.math.sign
+import com.google.firebase.auth.FirebaseAuth
 
 class Login : AppCompatActivity() {
+    private lateinit var auth: FirebaseAuth
+    
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContentView(R.layout.activity_login)
+        
+        auth = FirebaseAuth.getInstance()
 
-        val btnLogin:Button= findViewById(R.id.login)
-        val username:EditText= findViewById(R.id.user)
-        val password:EditText= findViewById(R.id.pass)
-        val signin: TextView= findViewById(R.id.sign_in)
+        val btnLogin: Button = findViewById(R.id.login)
+        val username: EditText = findViewById(R.id.user)
+        val password: EditText = findViewById(R.id.pass)
+        val signin: TextView = findViewById(R.id.sign_in)
 
-        btnLogin.setOnClickListener{
-            val user=username.text.toString()
-            val pass=password.text.toString()
-            if(login(user,pass)){
-                val intent=Intent(this, MainActivity::class.java)
-                startActivity(intent)
-            }else{
-                showError("credenciales incorrectas",true)
+        btnLogin.setOnClickListener {
+            val email = username.text.toString().trim()
+            val pass = password.text.toString().trim()
+            
+            if (email.isEmpty() || pass.isEmpty()) {
+                showError("Todos los campos son requeridos", true)
+                return@setOnClickListener
             }
+
+            btnLogin.isEnabled = false
+            
+            auth.signInWithEmailAndPassword(email, pass)
+                .addOnCompleteListener(this) { task ->
+                    btnLogin.isEnabled = true 
+                    
+                    if (task.isSuccessful) {
+                        showError("", false)
+                        val intent = Intent(this, MainActivity::class.java)
+                        intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                        startActivity(intent)
+                        finish()
+                    } else {
+                        // Si falla el login
+                        showError("Credenciales incorrectas", true)
+                    }
+                }
         }
 
-        signin.setOnClickListener{
-            val intent=Intent(this, SignIn::class.java)
+        signin.setOnClickListener {
+            val intent = Intent(this, SignIn::class.java)
             startActivity(intent)
         }
 
@@ -47,13 +68,9 @@ class Login : AppCompatActivity() {
         }
     }
 
-    fun login(user:String, pass:String):Boolean{
-        return true
-    }
-
-    fun showError(text:String = "",visible:Boolean){
-        val errorTv : TextView =findViewById(R.id.tvError)
-        errorTv.text=text
-        errorTv.visibility = if(visible) View.VISIBLE else View.INVISIBLE
+    private fun showError(text: String = "", visible: Boolean) {
+        val errorTv: TextView = findViewById(R.id.tvError)
+        errorTv.text = text
+        errorTv.visibility = if (visible) View.VISIBLE else View.INVISIBLE
     }
 }

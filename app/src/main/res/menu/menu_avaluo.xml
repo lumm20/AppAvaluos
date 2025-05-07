@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_piso"
+        android:icon="@drawable/piso"
+        android:title="Pisos"/>
+
+    <item
+        android:id="@+id/nav_muro"
+        android:icon="@drawable/muro"
+        android:title="Muros"/>
+
+    <item
+        android:id="@+id/nav_plafones"
+        android:icon="@drawable/plafones"
+        android:title="Plafones"/>
+
+</menu>
