@@ -24,11 +24,12 @@ class MainActivity : AppCompatActivity() {
                 R.id.nav_home -> replaceFragment(HomeFragment())
                 R.id.nav_citas -> replaceFragment(AgendarCitasFragment())
                 R.id.nav_info -> replaceFragment(InfoFragment())
-                R.id.nav_avaluos -> {
-                    val intent = Intent(this, MisAvaluosActivity::class.java)
-                    startActivity(intent)
-                    return@setOnItemSelectedListener false
-                }
+                R.id.nav_avaluos -> replaceFragment(MisAvaluos2())
+//                R.id.nav_avaluos -> {
+//                    val intent = Intent(this, MisAvaluosActivity::class.java)
+//                    startActivity(intent)
+//                    return@setOnItemSelectedListener false
+//                }
             }
             true
         }

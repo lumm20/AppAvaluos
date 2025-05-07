@@ -76,7 +76,7 @@ class HomeFragment : Fragment() {
         }
         
         btnNuevoAvaluo.setOnClickListener {
-            val listAvaluosIntent = Intent(requireContext(), MisAvaluosActivity::class.java)
+            val listAvaluosIntent = Intent(requireContext(), NuevoAvaluoActivity::class.java)
             startActivity(listAvaluosIntent)
         }
 
