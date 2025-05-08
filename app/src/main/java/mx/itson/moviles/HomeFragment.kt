@@ -43,6 +43,7 @@ class HomeFragment : Fragment() {
         val btnEditarPerfil = view.findViewById<Button>(R.id.btnEditarPerfil)
         val btnCerrarSesion = view.findViewById<Button>(R.id.btnCerrarSesion)
         val btnNuevoAvaluo = view.findViewById<Button>(R.id.btnNuevoAvaluo)
+        val btnConocerMas= view.findViewById<Button>(R.id.btnConocerMas)
         val tvUserName = view.findViewById<TextView>(R.id.tvUserName)
 
         loadUserData(tvUserName)
@@ -78,6 +79,11 @@ class HomeFragment : Fragment() {
         btnNuevoAvaluo.setOnClickListener {
             val listAvaluosIntent = Intent(requireContext(), MisAvaluosActivity::class.java)
             startActivity(listAvaluosIntent)
+        }
+
+        btnConocerMas.setOnClickListener{
+            val listAvaluosIntent = Intent(requireContext(), MisAvaluosActivity::class.java)
+            listAvaluosIntent.putExtras(Bundle.EMPTY)
         }
 
         return view

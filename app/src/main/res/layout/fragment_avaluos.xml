@@ -35,7 +35,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
             android:fontFamily="serif"
-            android:text="@string/mis_avaluos"
+            android:text="Mis avaluos"
             android:textColor="@color/black"
             android:textSize="30sp"
             android:layout_gravity="center"/>
@@ -45,7 +45,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="25dp"
             android:fontFamily="serif"
-            android:text="@string/folios_activos"
+            android:text="folios activos:"
             android:textColor="@color/black"
             android:textSize="15sp"
             android:layout_gravity="center"/>
@@ -66,7 +66,7 @@
                 android:layout_width="160dp"
                 android:layout_height="wrap_content"
                 android:background="@drawable/round_button"
-                android:text="@string/btn_nuevo_avaluo"
+                android:text="Nuevo avalúo"
                 android:layout_marginTop="10dp"
                 android:textColor="@color/white"
                 android:textSize="16sp"

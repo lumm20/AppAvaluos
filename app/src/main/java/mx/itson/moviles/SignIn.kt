@@ -61,16 +61,16 @@ class SignIn : AppCompatActivity() {
     }
 
     private fun validateFields():Boolean{
-        if(username.text.toString().isBlank()){
+        if(nombreEditText.text.toString().isBlank()){
             return false
         }
-        if(email.text.toString().isBlank()){
+        if(emailEditText.text.toString().isBlank()){
             return false
         }
-        if(password.text.toString().isBlank()){
+        if(passwordEditText.text.toString().isBlank()){
             return false
         }
-        if(confPassword.text.toString().isBlank()){
+        if(confPasswordEditText.text.toString().isBlank()){
             return false
         }
         return true
