@@ -5,30 +5,10 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.cardview.widget.CardView
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-private const val ARG_PARAM1 = "param1"
-private const val ARG_PARAM2 = "param2"
-
-/**
- * A simple [Fragment] subclass.
- * Use the [EmpresasFragment.newInstance] factory method to
- * create an instance of this fragment.
- */
 class EmpresasFragment : Fragment() {
-    // TODO: Rename and change types of parameters
-    private var param1: String? = null
-    private var param2: String? = null
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        arguments?.let {
-            param1 = it.getString(ARG_PARAM1)
-            param2 = it.getString(ARG_PARAM2)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -44,40 +24,37 @@ class EmpresasFragment : Fragment() {
         var empresaFragment = DetalleEmpresaFragment()
 
         empresa1.setOnClickListener {
-            empresaFragment = DetalleEmpresaFragment.newInstance("Empresa 1", "Lorem ipsum bla bla")
+            val src : Int = R.drawable.logo_gorozpe
+            empresaFragment = DetalleEmpresaFragment.newInstance("Gorozpe & Robles",
+                "Somos un despacho dedicado a la prestación de servicios legales y de avalúos. Brindamos asesoría y apoyo técnico y humano para encontrar las respuestas a los problemas y necesidades de nuestros clientes.",
+                "Doctor Aguilar No. 138, entre Sahuaripa y Madrid; Col. Prados del Centenario. C.P. 83260; Hermosillo, Sonora, México.",
+                src)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, empresaFragment)
+                .commit()
         }
         empresa2.setOnClickListener {
-            empresaFragment = DetalleEmpresaFragment.newInstance("Empresa 2", "Lorem ipsum bla bla 2")
+            val src : Int = R.drawable.logo_noriega
+            empresaFragment = DetalleEmpresaFragment.newInstance("Grupo Noriega Profesional",
+                "Especialistas en avalúos de inmuebles, industriales, maquinaria y agropecuarios.",
+                "Alfonso Ortiz Tirado No. 106; Col. Centro, casi esquina con Everardo Monroy; Hermosillo, Sonora, México",
+                src)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, empresaFragment)
+                .commit()
         }
         empresa3.setOnClickListener {
-            empresaFragment = DetalleEmpresaFragment.newInstance("Empresa 3", "Lorem ipsum bla bla 3")
+            val src : Int = R.drawable.camarillo_logo3
+            empresaFragment = DetalleEmpresaFragment.newInstance("Camarillo",
+                "En el año de 1970, Camarillo: Valuadores Profesionales comenzó a desempeñarse en el ámbito de los servicios de valuación, especializándose en construcciones, terrenos, maquinaria y equipo industrial y avalúos agropecuarios. Durante 47 años, los integrantes de Camarillo se han esforzado por generarle a las empresas o personas, documentación en donde quede plasmado la estimación precisa de sus inmuebles y además, se ofrece una orientación sobre los precios de la probable venta de los inmuebles.",
+                "Francisco Márquez 23 esq. 14 de Abril; Col. La Huerta.; Hermosillo, Sonora, México",
+                src)
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, empresaFragment)
+                .commit()
         }
-
-        parentFragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, empresaFragment)
-            .addToBackStack(null)
-            .commit()
 
         return view
     }
 
-    companion object {
-        /**
-         * Use this factory method to create a new instance of
-         * this fragment using the provided parameters.
-         *
-         * @param param1 Parameter 1.
-         * @param param2 Parameter 2.
-         * @return A new instance of fragment EmpresasFragment.
-         */
-        // TODO: Rename and change types and number of parameters
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EmpresasFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
 }

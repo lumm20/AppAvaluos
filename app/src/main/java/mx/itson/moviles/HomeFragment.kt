@@ -82,8 +82,11 @@ class HomeFragment : Fragment() {
         }
 
         btnConocerMas.setOnClickListener{
-            val listAvaluosIntent = Intent(requireContext(), MisAvaluosActivity::class.java)
-            listAvaluosIntent.putExtras(Bundle.EMPTY)
+            val empresasFragment = EmpresasFragment()
+            parentFragmentManager.beginTransaction()
+                .replace(R.id.fragment_container, empresasFragment)
+                .addToBackStack(null)
+                .commit()
         }
 
         return view

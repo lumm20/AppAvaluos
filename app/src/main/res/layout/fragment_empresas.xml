@@ -71,7 +71,7 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="10dp"
-                    android:src="@drawable/question"
+                    android:src="@drawable/logo_gorozpe"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -84,16 +84,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Empresa 1"
+                        android:text="Gorozpe &amp; Robles"
                         android:textColor="@color/text_primary"
                         android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/descEmpresa1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Descricpion de la empresa"
+                        android:text="Somos un despacho dedicado a la prestación de servicios legales y de avalúos"
                         android:textColor="@color/text_secondary"
                         android:textSize="16sp" />
 
@@ -122,7 +123,7 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="10dp"
-                    android:src="@drawable/question"
+                    android:src="@drawable/logo_noriega"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -135,16 +136,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Empresa 2"
+                        android:text="Grupo Noriega Profesional"
                         android:textColor="@color/text_primary"
                         android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/descEmpresa2"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Descricpion de la empresa"
+                        android:text="Especialistas en avalúos de inmuebles, industriales, maquinaria y agropecuarios"
                         android:textColor="@color/text_secondary"
                         android:textSize="16sp" />
 
@@ -173,7 +175,7 @@
                     android:layout_height="80dp"
                     android:layout_gravity="center"
                     android:layout_marginHorizontal="10dp"
-                    android:src="@drawable/question"
+                    android:src="@drawable/camarillo_logo3"
                     />
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -186,16 +188,17 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:fontFamily="sans-serif-medium"
-                        android:text="Empresa 3"
+                        android:text="Camarillo"
                         android:textColor="@color/text_primary"
                         android:textSize="28sp"
                         android:textStyle="bold" />
 
                     <TextView
+                        android:id="@+id/descEmpresa3"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
-                        android:text="Descricpion de la empresa"
+                        android:text="Somos expertos en Valuación, con más de 50 años de experiencia"
                         android:textColor="@color/text_secondary"
                         android:textSize="16sp" />
 
