@@ -19,6 +19,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import mx.itson.moviles.CitaRegistradaFragment
+import mx.itson.moviles.EmpresasFragment
 import mx.itson.moviles.R
 import mx.itson.moviles.modelo.Cita
 import mx.itson.moviles.modelo.Direccion
@@ -27,6 +28,8 @@ import java.text.SimpleDateFormat
 import java.util.Calendar
 import java.util.Date
 import java.util.Locale
+
+private const val ARG_EMPRESA = "empresa"
 
 class AgendarCitasFragment : Fragment() {
 
@@ -42,6 +45,7 @@ class AgendarCitasFragment : Fragment() {
 
     private var fechaSeleccionada: Date? = null
     private var horaSeleccionada: String? = null
+    private var empresa: String? = null
 
     // Mapa para almacenar folios y sus direcciones correspondientes
     private val foliosDirecciones = mutableMapOf<String, String>()
@@ -58,6 +62,10 @@ class AgendarCitasFragment : Fragment() {
         horaEt = view.findViewById(R.id.hora_et)
         direccionTv = view.findViewById(R.id.dirección_et)  // Asegúrate de que el ID sea correcto
         siguienteBtn = view.findViewById(R.id.siguiente_btn)
+
+        val etEmpresa: EditText= view.findViewById(R.id.empresa_et)
+        etEmpresa.setText(empresa)
+
 
         // Configurar el listener para el spinner
         avaluoSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -97,6 +105,13 @@ class AgendarCitasFragment : Fragment() {
         }
 
         return view
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            empresa = it.getString(ARG_EMPRESA)
+        }
     }
 
     private fun mostrarDatePickerDialog() {
@@ -279,7 +294,7 @@ class AgendarCitasFragment : Fragment() {
             telefonoContacto = telefono,
             correoContacto = correo,
             folioAvaluo = folioAvaluoSeleccionado,
-            empresa = null,
+            empresa = empresa,
             usuarioId = usuarioIdActual,
             folioCita = nuevoFolioCita
         )
@@ -320,5 +335,23 @@ class AgendarCitasFragment : Fragment() {
             .replace(R.id.fragment_container, citaRegistradaFragment)
             .addToBackStack(null)
             .commit()
+    }
+
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param empresa Parameter 1.
+         * @return A new instance of fragment EmpresasFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(empresa: String) =
+            EmpresasFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_EMPRESA, empresa)
+                }
+            }
     }
 }
