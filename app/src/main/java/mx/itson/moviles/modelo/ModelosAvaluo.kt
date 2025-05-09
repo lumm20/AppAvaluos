@@ -23,9 +23,9 @@ data class Avaluo(
  */
 data class CaracteristicaInmueble(
     val id: String = "",
-    val zona: String,
-    val nombre: String,
-    val categoria: String
+    val zona: String = "",
+    val nombre: String ="",
+    val categoria: String=""
 ) : Serializable
 
 /**
@@ -33,21 +33,21 @@ data class CaracteristicaInmueble(
  */
 data class CaracteristicaEntorno(
     val id: String = "",
-    val tipo: String,
-    val nombre: String,
-    val categoria: String
+    val tipo: String = "",
+    val nombre: String = "",
+    val categoria: String = ""
 ) : Serializable
 
 /**
  * Modelo de datos para una dirección.
  */
 data class Direccion(
-    val id: String,
-    val calle: String,
-    val numeroExterior: String,
-    val numeroInterior: String,
-    val ciudad: String,
-    val codigoPostal: String
+    val id: String = "",
+    val calle: String = "",
+    val numeroExterior: String = "",
+    val numeroInterior: String = "",
+    val ciudad: String = "",
+    val codigoPostal: String = ""
 ) : Serializable
 
 /**

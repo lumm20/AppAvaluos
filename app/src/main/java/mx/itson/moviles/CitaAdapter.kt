@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.google.firebase.database.DataSnapshot
 import mx.itson.moviles.modelo.Cita
+import mx.itson.moviles.modelo.Direccion
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -32,7 +34,7 @@ class CitaAdapter(
         Log.d("CitaAdapter", "Binding cita en posición $position: ${cita.folioCita}")
 
         // Formatear fechas
-        val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
+        val dateFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.getDefault())
 
         try {
             val fechaRegistroDate = Date(cita.fechaRegistro)
@@ -72,4 +74,6 @@ class CitaAdapter(
         val txtFechaR: TextView = itemView.findViewById(R.id.txtFechaRegistro)
         val txtFechaV: TextView = itemView.findViewById(R.id.txtFechaVisita)
     }
+
+
 }
