@@ -28,7 +28,16 @@ import java.util.Calendar
 import java.util.Date
 import java.util.Locale
 
+private const val ARG_EMPRESA = "empresa"
 class AgendarCitasFragment : Fragment() {
+    private var empresa: String? = null
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        arguments?.let {
+            empresa = it.getString(ARG_EMPRESA)
+        }
+    }
 
     private val db = FirebaseDatabase.getInstance()
     private val auth = FirebaseAuth.getInstance()
@@ -71,6 +80,10 @@ class AgendarCitasFragment : Fragment() {
                 // No hacer nada
             }
         }
+        val btnSiguiente: Button = view.findViewById(R.id.siguiente_btn)
+        val etEmpresa: EditText= view.findViewById(R.id.nombre_et)
+        etEmpresa.setText(empresa)
+        val fragment = CitaRegistradaFragment()
 
         cargarFoliosAvaluosFirebase()
 
@@ -321,4 +334,22 @@ class AgendarCitasFragment : Fragment() {
             .addToBackStack(null)
             .commit()
     }
+    companion object {
+        /**
+         * Use this factory method to create a new instance of
+         * this fragment using the provided parameters.
+         *
+         * @param empresa Parameter 1.
+         * @return A new instance of fragment EmpresasFragment.
+         */
+        // TODO: Rename and change types and number of parameters
+        @JvmStatic
+        fun newInstance(empresa: String) =
+            AgendarCitasFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_EMPRESA, empresa)
+                }
+            }
+    }
+
 }

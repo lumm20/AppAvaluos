@@ -45,6 +45,10 @@
 
     <!-- Mensajes -->
     <string name="guardado_exito">Guardado con éxito</string>
+
+    <!--    info avaluos-->
+    <string name="significado_avaluos">Un avalúo es una estimación del valor económico de un bien, como un inmueble, realizada por un profesional certificado, con base en criterios técnicos y de mercado.</string>
+    <string name="importancia_avaluos">Los avalúos son importantes porque permiten conocer el valor real de un bien para tomar decisiones informadas en compras, ventas, préstamos o seguros.</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
