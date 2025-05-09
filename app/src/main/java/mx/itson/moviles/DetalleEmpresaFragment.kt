@@ -49,17 +49,20 @@ class DetalleEmpresaFragment : Fragment() {
 
         val nombreEmpresa = view.findViewById<TextView>(R.id.title)
         val descripcionEmpresa = view.findViewById<TextView>(R.id.description)
+        val ubicacionEmpresa = view.findViewById<TextView>(R.id.location)
         val agendarCita = view.findViewById<Button>(R.id.agendarCita)
         val imagen = view.findViewById<ImageView>(R.id.imagen)
 
         imagen.setImageResource(src)
         nombreEmpresa.text = empresa
         descripcionEmpresa.text = descripcion
+        ubicacionEmpresa.text = ubicacion
 
         agendarCita.setOnClickListener {
             val agendarCitasFragment= AgendarCitasFragment.newInstance(nombreEmpresa.text.toString())
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, agendarCitasFragment)
+                .addToBackStack(null)
                 .commit()
         }
         return view
