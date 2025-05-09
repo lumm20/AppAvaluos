@@ -36,7 +36,7 @@ class AvaluoAdapter(
         val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
         val fechaFormateada = dateFormat.format(avaluo.fechaRegistro)
         
-        holder.txtFolio.text = avaluo.folio
+        holder.txtFolio.text = "Folio: ${avaluo.folio}"
         holder.txtFecha.text = "Fecha: $fechaFormateada"
         
         val cantidadInmueble = avaluo.caracteristicasInmueble.size

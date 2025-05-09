@@ -118,6 +118,7 @@ class MisAvaluos2 : Fragment() {
                         val fechaRegistroLong = avaluoSnapshot.child("fechaRegistro").getValue(Long::class.java) ?: System.currentTimeMillis()
                         val fechaRegistro = fechaRegistroLong
                         val usuarioId = avaluoSnapshot.child("usuarioId").getValue(String::class.java) ?: ""
+                        val foli = avaluoSnapshot.child("folio").getValue(String::class.java) ?: ""
                         val correoUsuario = avaluoSnapshot.child("correoUsuario").getValue(String::class.java) ?: ""
 
 
@@ -156,7 +157,7 @@ class MisAvaluos2 : Fragment() {
                         }
 
                         avaluos.add(Avaluo(
-                            folio = folio,
+                            folio = foli,
                             fechaRegistro = fechaRegistro,
                             usuarioId = usuarioId,
                             correoUsuario = correoUsuario,

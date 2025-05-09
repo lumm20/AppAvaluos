@@ -46,14 +46,17 @@ class CitaAdapter(
             Log.d("CitaAdapter", "Fecha Registro: $fechaRForm, Fecha Visita: $fechaVForm")
 
 
-            holder.txtFolioC.text = cita.folioCita
+            holder.txtFolioC.text = "Folio cita: ${cita.folioCita}"
             holder.txtFechaR.text = "Fecha Registro: $fechaRForm"
             holder.txtFechaV.text = "Fecha Visita: $fechaVForm"
+            holder.txtEmpresa.text = "Empresa: ${cita.empresa}"
+
 
 
             holder.txtFolioC.visibility = View.VISIBLE
             holder.txtFechaR.visibility = View.VISIBLE
             holder.txtFechaV.visibility = View.VISIBLE
+            holder.txtEmpresa.visibility = View.VISIBLE
         } catch (e: Exception) {
             Log.e("CitaAdapter", "Error al formatear fechas", e)
 
@@ -73,6 +76,7 @@ class CitaAdapter(
         val txtFolioC: TextView = itemView.findViewById(R.id.txtFolioCita)
         val txtFechaR: TextView = itemView.findViewById(R.id.txtFechaRegistro)
         val txtFechaV: TextView = itemView.findViewById(R.id.txtFechaVisita)
+        val txtEmpresa: TextView = itemView.findViewById(R.id.txtEmpresa)
     }
 
 

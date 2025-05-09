@@ -40,6 +40,7 @@ class MisCitasFragment : Fragment() {
         database = FirebaseDatabase.getInstance()
 
         val toolbar: androidx.appcompat.widget.Toolbar = view.findViewById(R.id.toolbar)
+        val btnBack = view.findViewById<ImageButton>(R.id.btnBack)
 
         toolbar.setNavigationOnClickListener {
             (activity as? MainActivity)?.onBackPressedDispatcher?.onBackPressed()
@@ -58,6 +59,10 @@ class MisCitasFragment : Fragment() {
 
         // Cargar datos inicialmente
         loadCitasFromFirebase()
+
+        btnBack.setOnClickListener {
+            parentFragmentManager.popBackStack()
+        }
 
         return view
     }
@@ -103,6 +108,7 @@ class MisCitasFragment : Fragment() {
                         val fechaRegistroLong = citaSnapshot.child("fechaRegistro").getValue(Long::class.java) ?: System.currentTimeMillis()
                         val fechaVisitaLong = citaSnapshot.child("fechaVisita").getValue(Long::class.java) ?: System.currentTimeMillis()
                         val usuarioId = citaSnapshot.child("usuarioId").getValue(String::class.java) ?: ""
+                        val empresa = citaSnapshot.child("empresa").getValue(String::class.java) ?: ""
 
                         Log.d("MisCitasFragment", "Cita encontrada - Folio: $folio")
 
@@ -110,7 +116,8 @@ class MisCitasFragment : Fragment() {
                             usuarioId = usuarioId,
                             folioCita = folio,
                             fechaVisita = fechaVisitaLong,
-                            fechaRegistro = fechaRegistroLong
+                            fechaRegistro = fechaRegistroLong,
+                            empresa = empresa
                         )
 
                         citas.add(cita)

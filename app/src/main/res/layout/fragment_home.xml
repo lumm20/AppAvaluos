@@ -50,66 +50,6 @@
         app:layout_constraintTop_toTopOf="@id/profile"
         app:layout_constraintBottom_toBottomOf="@id/profile" />
 
-    <!-- Panel de opciones de perfil con elevación -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/profileOptionsCard"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="25dp"
-        android:layout_marginTop="8dp"
-        app:cardCornerRadius="12dp"
-        app:cardElevation="6dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/profile"
-        android:visibility="gone">
-
-        <LinearLayout
-            android:id="@+id/profileOptions"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="12dp">
-
-            <Button
-                android:id="@+id/btnEditarPerfil"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="Editar Perfil"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/ic_profile"
-                android:drawablePadding="8dp"
-                android:backgroundTint="@color/primary"
-                android:drawableTint="@color/white"
-                android:gravity="start|center_vertical" />
-
-            <Button
-                android:id="@+id/btnMisCitas"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Mis citas"
-                android:textColor="@color/white"
-                android:drawableStart="@drawable/calendario"
-                android:drawablePadding="8dp"
-                android:backgroundTint="@color/primary"
-                android:drawableTint="@color/white"
-                android:gravity="start|center_vertical" />
-
-            <Button
-                android:id="@+id/btnCerrarSesion"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
-                android:text="Cerrar sesión"
-                android:textColor="@color/white"
-                android:backgroundTint="@color/primary"
-                android:drawableStart="@android:drawable/ic_lock_power_off"
-                android:drawablePadding="8dp"
-                android:drawableTint="@color/white"
-                android:gravity="start|center_vertical" />
-        </LinearLayout>
-    </androidx.cardview.widget.CardView>
-
     <androidx.cardview.widget.CardView
         android:id="@+id/advice1"
         android:layout_width="0dp"
@@ -125,6 +65,7 @@
         app:layout_constraintTop_toBottomOf="@id/profile">
 
         <LinearLayout
+            android:id="@+id/agendarCitaCuadro"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -161,6 +102,7 @@
                 android:textSize="16sp" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
+
     <androidx.cardview.widget.CardView
         android:id="@+id/advice2"
         android:layout_width="0dp"
@@ -210,6 +152,68 @@
                 android:text="Nuevo Avalúo"
                 android:textColor="@color/white"
                 android:textSize="16sp" />
+        </LinearLayout>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Panel de opciones de perfil movido al final y con elevación aumentada -->
+    <androidx.cardview.widget.CardView
+        android:id="@+id/profileOptionsCard"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="25dp"
+        android:layout_marginTop="8dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="16dp"
+        android:elevation="16dp"
+        android:translationZ="16dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile"
+        android:visibility="gone">
+
+        <LinearLayout
+            android:id="@+id/profileOptions"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <Button
+                android:id="@+id/btnEditarPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="Editar Perfil"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/ic_profile"
+                android:drawablePadding="8dp"
+                android:backgroundTint="@color/primary"
+                android:drawableTint="@color/white"
+                android:gravity="start|center_vertical" />
+
+            <Button
+                android:id="@+id/btnMisCitas"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Mis citas"
+                android:textColor="@color/white"
+                android:drawableStart="@drawable/calendario"
+                android:drawablePadding="8dp"
+                android:backgroundTint="@color/primary"
+                android:drawableTint="@color/white"
+                android:gravity="start|center_vertical" />
+
+            <Button
+                android:id="@+id/btnCerrarSesion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:text="Cerrar sesión"
+                android:textColor="@color/white"
+                android:backgroundTint="@color/primary"
+                android:drawableStart="@android:drawable/ic_lock_power_off"
+                android:drawablePadding="8dp"
+                android:drawableTint="@color/white"
+                android:gravity="start|center_vertical" />
         </LinearLayout>
     </androidx.cardview.widget.CardView>
 

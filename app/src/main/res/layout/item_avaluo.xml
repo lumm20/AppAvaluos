@@ -59,7 +59,7 @@
             android:text="2 características del entorno"
             android:textSize="16sp"
             android:textColor="@color/text_primary"
-            android:drawableStart="@drawable/muro"
+            android:drawableStart="@drawable/ic_entorno"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"/>
 
