@@ -348,7 +348,7 @@ class AgendarCitasFragment : Fragment() {
         // TODO: Rename and change types and number of parameters
         @JvmStatic
         fun newInstance(empresa: String) =
-            EmpresasFragment().apply {
+            AgendarCitasFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_EMPRESA, empresa)
                 }

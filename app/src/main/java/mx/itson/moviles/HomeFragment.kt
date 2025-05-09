@@ -85,7 +85,6 @@ class HomeFragment : Fragment() {
             val empresasFragment = EmpresasFragment()
             parentFragmentManager.beginTransaction()
                 .replace(R.id.fragment_container, empresasFragment)
-                .addToBackStack(null)
                 .commit()
         }
 
