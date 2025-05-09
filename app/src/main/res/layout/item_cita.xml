@@ -39,7 +39,7 @@
             android:id="@+id/txtFechaVisita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Fecha Visita: 01/04/2025"
+            android:text="Fecha Cita: 01/04/2025"
             android:textSize="14sp"
             android:textColor="@color/text_secondary"
             android:layout_marginBottom="16dp"/>

@@ -61,11 +61,21 @@
                 android:textSize="24sp" />
 
             <!-- Correo -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Correo"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
             <EditText
                 android:id="@+id/correo_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
                 android:hint="@string/hint_correo"
@@ -75,11 +85,21 @@
                 android:textSize="18sp" />
 
             <!-- Teléfono -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Número contacto"
+                android:textColor="#000000"
+                android:textSize="20sp" />
+
             <EditText
                 android:id="@+id/telefono_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
                 android:hint="@string/hint_telefono"
@@ -137,6 +157,7 @@
                     android:id="@+id/spinner_avaluos"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
+                    android:layout_marginStart="5dp"
                     android:spinnerMode="dropdown"
                     android:popupBackground="@android:color/white"
                     android:backgroundTint="@android:color/transparent" />
@@ -178,11 +199,21 @@
                 android:textSize="20sp" />
 
             <!-- Fecha -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Fecha"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/fecha_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
                 android:hint="@string/hint_fecha"
@@ -192,11 +223,21 @@
                 android:textSize="18sp" />
 
             <!-- Seleccionar hora -->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:text="Hora"
+                android:textColor="#000000"
+                android:textSize="16sp" />
+
             <EditText
                 android:id="@+id/hora_et"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="15dp"
                 android:layout_marginStart="15dp"
                 android:hint="Seleccionar hora"

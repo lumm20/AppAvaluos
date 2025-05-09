@@ -41,11 +41,14 @@ class AgendarCitasFragment : Fragment() {
     private lateinit var fechaEt: EditText
     private lateinit var horaEt: EditText
     private lateinit var direccionTv: TextView
+    private lateinit var empresaEt: TextView
     private lateinit var siguienteBtn: Button
 
     private var fechaSeleccionada: Date? = null
     private var horaSeleccionada: String? = null
     private var empresa: String? = null
+    private var listaFolios: List<String> = emptyList()
+
 
     // Mapa para almacenar folios y sus direcciones correspondientes
     private val foliosDirecciones = mutableMapOf<String, String>()
@@ -62,10 +65,7 @@ class AgendarCitasFragment : Fragment() {
         horaEt = view.findViewById(R.id.hora_et)
         direccionTv = view.findViewById(R.id.dirección_et)  // Asegúrate de que el ID sea correcto
         siguienteBtn = view.findViewById(R.id.siguiente_btn)
-
-        val etEmpresa: EditText= view.findViewById(R.id.empresa_et)
-        etEmpresa.setText(empresa)
-
+        empresaEt = view.findViewById(R.id.empresa_et)
 
         // Configurar el listener para el spinner
         avaluoSpinner.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
@@ -80,6 +80,7 @@ class AgendarCitasFragment : Fragment() {
             }
         }
 
+        cargarCorreoYTelefono()
         cargarFoliosAvaluosFirebase()
 
         fechaEt.setOnFocusChangeListener { _, hasFocus ->
@@ -104,6 +105,7 @@ class AgendarCitasFragment : Fragment() {
             guardarCitaFirebase()
         }
 
+        empresaEt.setText(empresa)
         return view
     }
 
@@ -175,6 +177,7 @@ class AgendarCitasFragment : Fragment() {
                     }
                 }
 
+                listaFolios = folios
                 val adapter = ArrayAdapter(requireContext(), android.R.layout.simple_spinner_dropdown_item, folios)
                 avaluoSpinner.adapter = adapter
 
@@ -257,11 +260,51 @@ class AgendarCitasFragment : Fragment() {
         Log.d("AgendarCitas", "Actualizando dirección para folio $folioSeleccionado: $direccion")
     }
 
+    private fun cargarCorreoYTelefono() {
+        val usuario = auth.currentUser
+        if (usuario != null) {
+            val uid = usuario.uid
+            val userRef = db.getReference("users").child(uid)
+
+            userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val correo = snapshot.child("correo").getValue(String::class.java)
+                    val telefono = snapshot.child("telefono").getValue(String::class.java)
+
+                    correoEt.setText(correo)
+                    telefonoEt.setText(telefono)
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Log.e("AgendarCitas", "Error al leer datos del usuario desde la DB: ${error.message}")
+                    Toast.makeText(requireContext(), "Error al cargar información", Toast.LENGTH_SHORT).show()
+                }
+            })
+        } else {
+            Log.d("AgendarCitas", "No hay usuario autenticado.")
+        }
+    }
+
     private fun guardarCitaFirebase() {
         val correo = correoEt.text.toString()
         val telefono = telefonoEt.text.toString()
         val folioAvaluoSeleccionado = avaluoSpinner.selectedItem.toString()
         val usuarioIdActual = auth.currentUser?.uid
+
+        if (listaFolios.isEmpty()) {
+            Toast.makeText(requireContext(), "No hay avalúos disponibles para agendar una cita.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        if (correo.isEmpty()) {
+            correoEt.error = "Por favor, ingresa tu correo electrónico"
+            return
+        }
+
+        if (telefono.isEmpty()) {
+            telefonoEt.error = "Por favor, ingresa tu número de teléfono"
+            return
+        }
 
         if (fechaSeleccionada == null) {
             Toast.makeText(requireContext(), "Por favor, selecciona una fecha", Toast.LENGTH_SHORT).show()

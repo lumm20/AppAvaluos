@@ -48,7 +48,7 @@ class CitaAdapter(
 
             holder.txtFolioC.text = "Folio cita: ${cita.folioCita}"
             holder.txtFechaR.text = "Fecha Registro: $fechaRForm"
-            holder.txtFechaV.text = "Fecha Visita: $fechaVForm"
+            holder.txtFechaV.text = "Fecha Cita: $fechaVForm"
             holder.txtEmpresa.text = "Empresa: ${cita.empresa}"
 
 
