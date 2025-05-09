@@ -81,8 +81,8 @@ class AgendarCitasFragment : Fragment() {
             }
         }
         val btnSiguiente: Button = view.findViewById(R.id.siguiente_btn)
-        val etEmpresa: EditText= view.findViewById(R.id.nombre_et)
-        etEmpresa.setText(empresa)
+//        val etEmpresa: EditText= view.findViewById(R.id.nombre_et)
+//        etEmpresa.setText(empresa)
         val fragment = CitaRegistradaFragment()
 
         cargarFoliosAvaluosFirebase()
