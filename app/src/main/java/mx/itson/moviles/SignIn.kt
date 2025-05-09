@@ -57,6 +57,29 @@ class SignIn : AppCompatActivity() {
             val intent = Intent(this, Login::class.java)
             startActivity(intent)
         }
+
+    }
+
+    private fun validateFields():Boolean{
+        if(nombreEditText.text.toString().isBlank()){
+            return false
+        }
+        if(emailEditText.text.toString().isBlank()){
+            return false
+        }
+        if(passwordEditText.text.toString().isBlank()){
+            return false
+        }
+        if(confPasswordEditText.text.toString().isBlank()){
+            return false
+        }
+        return true
+    }
+
+    private fun showError(text:String,visible:Boolean){
+        val errorTv : TextView =findViewById(R.id.tvError)
+        errorTv.text=text
+        errorTv.visibility = if(visible) View.VISIBLE else View.INVISIBLE
     }
 
     private fun validateAndRegister() {
