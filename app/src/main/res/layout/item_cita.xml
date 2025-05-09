@@ -51,13 +51,13 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
-            android:id="@+id/txtCantidadInmueble"
+            android:id="@+id/txtEmpresa"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Dressrosa"
             android:textSize="16sp"
             android:textColor="@color/text_primary"
-            android:drawableStart="@drawable/icon_location"
+            android:drawableStart="@drawable/ic_empresa"
             android:drawablePadding="8dp"
             android:gravity="center_vertical"
             android:layout_marginBottom="8dp"/>
