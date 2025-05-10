@@ -51,18 +51,25 @@
             android:layout_marginBottom="16dp"/>
 
         <TextView
-            android:id="@+id/txtEmpresa"
+        android:id="@+id/txtEmpresa"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Dressrosa"
+        android:textSize="16sp"
+        android:textColor="@color/text_primary"
+        android:drawableStart="@drawable/ic_empresa"
+        android:drawablePadding="8dp"
+        android:gravity="center_vertical"
+        android:layout_marginBottom="8dp"/>
+
+        <Button
+            android:id="@+id/btnCancelarCita"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dressrosa"
-            android:textSize="16sp"
-            android:textColor="@color/text_primary"
-            android:drawableStart="@drawable/ic_empresa"
-            android:drawablePadding="8dp"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="8dp"/>
-
-
+            android:text="Cancelar Cita"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#FF5252"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>

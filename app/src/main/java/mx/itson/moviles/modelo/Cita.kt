@@ -12,6 +12,8 @@ data class Cita(
     val empresa:String? = null,
     val usuarioId: String = "",
     val folioCita: String = "",
+    val activo: Boolean = true,
 ) : Serializable{
-    constructor() : this("", 0, 0, "", "", "", "", "", "")
+    constructor() : this("", 0, 0, "", "", "", "", "", "", true)
 }
+

@@ -102,25 +102,29 @@ class MisCitasFragment : Fragment() {
                     citas.clear()
 
                     Log.d("MisCitasFragment", "Datos recibidos, snapshot count: ${snapshot.childrenCount}")
-
                     for (citaSnapshot in snapshot.children) {
                         val folio = citaSnapshot.key ?: continue
                         val fechaRegistroLong = citaSnapshot.child("fechaRegistro").getValue(Long::class.java) ?: System.currentTimeMillis()
                         val fechaVisitaLong = citaSnapshot.child("fechaVisita").getValue(Long::class.java) ?: System.currentTimeMillis()
                         val usuarioId = citaSnapshot.child("usuarioId").getValue(String::class.java) ?: ""
                         val empresa = citaSnapshot.child("empresa").getValue(String::class.java) ?: ""
+                        val activo = citaSnapshot.child("activo").getValue(Boolean::class.java) ?: true
 
-                        Log.d("MisCitasFragment", "Cita encontrada - Folio: $folio")
+                        Log.d("MisCitasFragment", "Cita encontrada - Folio: $folio, Activo: $activo")
 
-                        val cita = Cita(
-                            usuarioId = usuarioId,
-                            folioCita = folio,
-                            fechaVisita = fechaVisitaLong,
-                            fechaRegistro = fechaRegistroLong,
-                            empresa = empresa
-                        )
+                        // Solo añadir citas activas
+                        if (activo) {
+                            val cita = Cita(
+                                usuarioId = usuarioId,
+                                folioCita = folio,
+                                fechaVisita = fechaVisitaLong,
+                                fechaRegistro = fechaRegistroLong,
+                                empresa = empresa,
+                                activo = activo
+                            )
 
-                        citas.add(cita)
+                            citas.add(cita)
+                        }
                     }
 
                     Log.d("MisCitasFragment", "Número de citas cargadas: ${citas.size}")

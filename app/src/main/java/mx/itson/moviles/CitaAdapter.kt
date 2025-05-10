@@ -1,13 +1,17 @@
 package mx.itson.moviles
 
+import android.app.AlertDialog
 import android.content.Context
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.FirebaseDatabase
 import mx.itson.moviles.modelo.Cita
 import mx.itson.moviles.modelo.Direccion
 import java.text.SimpleDateFormat
@@ -57,6 +61,21 @@ class CitaAdapter(
             holder.txtFechaR.visibility = View.VISIBLE
             holder.txtFechaV.visibility = View.VISIBLE
             holder.txtEmpresa.visibility = View.VISIBLE
+
+            holder.btnCancelarCita.setOnClickListener {
+                val folioToDelete = cita.folioCita
+                val citasRef = FirebaseDatabase.getInstance().getReference("citas")
+
+                // Update the 'activo' field to false
+                citasRef.child(folioToDelete).child("activo").setValue(false)
+                    .addOnSuccessListener {
+                        Toast.makeText(context, "Cita con folio $folioToDelete cancelada", Toast.LENGTH_SHORT).show()
+                    }
+                    .addOnFailureListener { error ->
+                        Toast.makeText(context, "Error al cancelar la cita: ${error.message}", Toast.LENGTH_SHORT).show()
+                        Log.e("CitaAdapter", "Error al cancelar cita: ${error.message}")
+                    }
+            }
         } catch (e: Exception) {
             Log.e("CitaAdapter", "Error al formatear fechas", e)
 
@@ -77,6 +96,7 @@ class CitaAdapter(
         val txtFechaR: TextView = itemView.findViewById(R.id.txtFechaRegistro)
         val txtFechaV: TextView = itemView.findViewById(R.id.txtFechaVisita)
         val txtEmpresa: TextView = itemView.findViewById(R.id.txtEmpresa)
+        val btnCancelarCita: Button = itemView.findViewById(R.id.btnCancelarCita)
     }
 
 
