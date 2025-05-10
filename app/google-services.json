@@ -1,14 +1,13 @@
 {
   "project_info": {
-
-    "project_number": "991041503273",
-    "project_id": "appavaluosequipo3",
-    "storage_bucket": "appavaluosequipo3.firebasestorage.app"
+    "project_number": "254153674717",
+    "project_id": "appavaluos-a5f1b",
+    "storage_bucket": "appavaluos-a5f1b.firebasestorage.app"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:991041503273:android:d52cda89bf1991c3ffdc38",
+        "mobilesdk_app_id": "1:254153674717:android:5a94816f794320909ff034",
         "android_client_info": {
           "package_name": "mx.itson.moviles"
         }
@@ -16,7 +15,7 @@
       "oauth_client": [],
       "api_key": [
         {
-          "current_key": "AIzaSyDkn_GTuZzqrtZrg0EmCsU8E2xwoI9nsa4"
+          "current_key": "AIzaSyCZBJB2mr6xjoeY5rjbyWDy2uXSdnqp5Kw"
         }
       ],
       "services": {
