@@ -82,11 +82,6 @@ class CitaAdapter(
                             citasRef.child(folioToDelete).child("activo").setValue(false)
                                 .addOnSuccessListener {
                                     try {
-                                        if (adapterPosition < citas.size) {
-                                            citas.removeAt(adapterPosition)
-                                            notifyItemRemoved(adapterPosition)
-                                            notifyItemRangeChanged(adapterPosition, citas.size)
-                                        }
                                         Toast.makeText(context, "Cita con folio $folioToDelete cancelada", Toast.LENGTH_SHORT).show()
                                     } catch (e: Exception) {
                                         Log.e("CitaAdapter", "Error al actualizar UI después de cancelar: ${e.message}")

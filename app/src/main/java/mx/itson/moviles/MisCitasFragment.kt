@@ -130,20 +130,26 @@ class MisCitasFragment : Fragment() {
                     Log.d("MisCitasFragment", "Número de citas cargadas: ${citas.size}")
 
                     // Actualiza UI en el hilo principal
-                    requireActivity().runOnUiThread {
-                        adapter.notifyDataSetChanged()
+                    if (isAdded) {
+                        requireActivity().runOnUiThread {
+                            adapter.notifyDataSetChanged()
 
-                        if (citas.isEmpty()) {
-                            showEmptyView("No tienes citas registradas.")
-                        } else {
-                            hideEmptyView()
+                            if (citas.isEmpty()) {
+                                showEmptyView("No tienes citas registradas.")
+                            } else {
+                                hideEmptyView()
+                            }
                         }
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Log.e("MisCitasFragment", "Error al cargar citas: ${error.message}")
-                    showEmptyView("Error al cargar citas: ${error.message}")
+                    if (isAdded) {
+                        requireActivity().runOnUiThread {
+                            showEmptyView("Error al cargar citas: ${error.message}")
+                        }
+                    }
                 }
             })
     }
