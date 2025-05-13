@@ -1,3 +1,4 @@
+import android.app.AlertDialog
 import android.app.DatePickerDialog
 import android.app.TimePickerDialog
 import android.os.Bundle
@@ -20,6 +21,7 @@ import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
 import mx.itson.moviles.CitaRegistradaFragment
 import mx.itson.moviles.EmpresasFragment
+import mx.itson.moviles.HomeFragment
 import mx.itson.moviles.R
 import mx.itson.moviles.modelo.Cita
 import mx.itson.moviles.modelo.Direccion
@@ -154,12 +156,17 @@ class AgendarCitasFragment : Fragment() {
             true
         )
         timePickerDialog.show()
-    }
-
-    private fun cargarFoliosAvaluosFirebase() {
+    }    private fun cargarFoliosAvaluosFirebase() {
         val avaluosRef = db.getReference("avaluos")
+        val currentUser = auth.currentUser
+        
+        if (currentUser == null) {
+            Toast.makeText(requireContext(), "Debe iniciar sesión para ver sus avalúos", Toast.LENGTH_SHORT).show()
+            return
+        }
 
-        avaluosRef.addListenerForSingleValueEvent(object : ValueEventListener {
+        avaluosRef.orderByChild("usuarioId").equalTo(currentUser.uid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 val folios = mutableListOf<String>()
                 foliosDirecciones.clear() // Limpiar el mapa antes de agregar nuevos valores
@@ -283,9 +290,7 @@ class AgendarCitasFragment : Fragment() {
         } else {
             Log.d("AgendarCitas", "No hay usuario autenticado.")
         }
-    }
-
-    private fun guardarCitaFirebase() {
+    }    private fun guardarCitaFirebase() {
         val correo = correoEt.text.toString()
         val telefono = telefonoEt.text.toString()
         val folioAvaluoSeleccionado = avaluoSpinner.selectedItem.toString()
@@ -320,64 +325,162 @@ class AgendarCitasFragment : Fragment() {
             Toast.makeText(requireContext(), "Error: Usuario no autenticado", Toast.LENGTH_SHORT).show()
             return
         }
-
-        val calendar = Calendar.getInstance()
-        calendar.time = fechaSeleccionada!!
-        val (hour, minute) = horaSeleccionada!!.split(":").map { it.toInt() }
-        calendar.set(Calendar.HOUR_OF_DAY, hour)
-        calendar.set(Calendar.MINUTE, minute)
-        val fechaVisitaTimestamp = calendar.time.time
-
-        val nuevoFolioCita = generarFolioCita()
-
-        val nuevaCita = Cita(
-            id = null,  // Firebase generará el ID
-            fechaRegistro = System.currentTimeMillis(),
-            fechaVisita = fechaVisitaTimestamp,
-            telefonoContacto = telefono,
-            correoContacto = correo,
-            folioAvaluo = folioAvaluoSeleccionado,
-            empresa = empresa,
-            usuarioId = usuarioIdActual,
-            folioCita = nuevoFolioCita
-        )
-
-        val citasRef = db.getReference("citas")
-        citasRef.child(nuevoFolioCita).setValue(nuevaCita)
-            .addOnSuccessListener {
-                Toast.makeText(requireContext(), "Cita agendada con éxito", Toast.LENGTH_SHORT).show()
-                navegarACitaRegistrada(nuevoFolioCita)
-            }
-            .addOnFailureListener { e ->
-                Toast.makeText(requireContext(), "Error al agendar la cita: ${e.message}", Toast.LENGTH_SHORT).show()
-                Log.e("Firebase", "Error al agendar la cita", e)
-            }
-
-        correoEt.text.clear()
-        telefonoEt.text.clear()
-        fechaEt.text.clear()
-        horaEt.text.clear()
-        fechaSeleccionada = null
-        horaSeleccionada = null
+        
+        // Verificar si ya existe una cita activa con el mismo avalúo para la misma empresa
+        verificarCitaExistente(folioAvaluoSeleccionado, empresa ?: "")
     }
 
     private fun generarFolioCita(): String {
         val fechaHora = SimpleDateFormat("yyyyMMdd", Locale.getDefault()).format(Date())
         val random = UUID.randomUUID().toString().substring(0, 8)
         return "$fechaHora-$random"
+    }    private fun navegarACitaRegistrada(folioCita: String) {
+        try {
+            Log.d("AgendarCitas", "Navegando a CitaRegistradaFragment con folio: $folioCita")
+            
+            // Crear un nuevo fragmento de confirmación y pasar el folio de la cita
+            val citaRegistradaFragment = CitaRegistradaFragment()
+            val bundle = Bundle()
+            bundle.putString("folioCita", folioCita)
+            citaRegistradaFragment.arguments = bundle
+
+            // Usar el fragmentManager con try-catch para mayor seguridad
+            try {
+                val fragmentManager = requireActivity().supportFragmentManager
+                fragmentManager.beginTransaction()
+                    .replace(R.id.fragment_container, citaRegistradaFragment)
+                    .commit()
+            } catch (e: Exception) {
+                Log.e("AgendarCitas", "Error al reemplazar fragmento", e)
+                throw e // Relanzar para capturar en el try-catch exterior
+            }
+        } catch (e: Exception) {
+            Log.e("AgendarCitas", "Error navegando a CitaRegistradaFragment", e)
+            // Intentar mostrar un mensaje al usuario
+            try {
+                Toast.makeText(requireContext(), 
+                    "Cita registrada con éxito. Folio: $folioCita", 
+                    Toast.LENGTH_LONG).show()
+            } catch (e2: Exception) {
+                Log.e("AgendarCitas", "Error al mostrar Toast de recuperación", e2)
+            }
+        }
     }
 
-    private fun navegarACitaRegistrada(folioCita: String) {
-        val citaRegistradaFragment = CitaRegistradaFragment()
-        val bundle = Bundle()
-        bundle.putString("folioCita", folioCita)
-        citaRegistradaFragment.arguments = bundle
+    // Función para verificar si ya existe una cita activa con el mismo avalúo para la misma empresa
+    private fun verificarCitaExistente(folioAvaluo: String, empresaSeleccionada: String) {
+        val citasRef = db.getReference("citas")
+        
+        citasRef.orderByChild("folioAvaluo").equalTo(folioAvaluo)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    var citaExistente = false
+                    
+                    for (citaSnapshot in snapshot.children) {
+                        val activa = citaSnapshot.child("activo").getValue(Boolean::class.java) ?: false
+                        val empresaCita = citaSnapshot.child("empresa").getValue(String::class.java) ?: ""
+                        
+                        if (activa && empresaCita == empresaSeleccionada) {
+                            citaExistente = true
+                            break
+                        }
+                    }
+                    
+                    if (citaExistente) {
+                        mostrarAdvertenciaCitaExistente()
+                    } else {
+                        procesarRegistroCita()
+                    }
+                }
+                
+                override fun onCancelled(error: DatabaseError) {
+                    Toast.makeText(requireContext(), "Error al verificar citas existentes: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("AgendarCitas", "Error al verificar citas: ${error.message}")
+                }
+            })
+    }
+    
+    private fun mostrarAdvertenciaCitaExistente() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setTitle("Cita ya programada")
+        builder.setMessage("Ya existe una cita activa para este avalúo con la empresa '$empresa'. No es posible agendar múltiples citas para el mismo avalúo con la misma empresa.")
+        builder.setPositiveButton("Entendido") { dialog, _ ->
+            dialog.dismiss()
+        }
+        val dialog = builder.create()
+        dialog.show()
+    }
+      private fun procesarRegistroCita() {
+        try {
+            val correo = correoEt.text.toString()
+            val telefono = telefonoEt.text.toString()
+            val folioAvaluoSeleccionado = avaluoSpinner.selectedItem?.toString() ?: ""
+            val usuarioIdActual = auth.currentUser?.uid ?: ""
+            
+            if (folioAvaluoSeleccionado.isEmpty()) {
+                Toast.makeText(requireContext(), "Error: No hay avalúo seleccionado", Toast.LENGTH_SHORT).show()
+                return
+            }
+            
+            val calendar = Calendar.getInstance()
+            calendar.time = fechaSeleccionada!!
+            val (hour, minute) = horaSeleccionada!!.split(":").map { it.toInt() }
+            calendar.set(Calendar.HOUR_OF_DAY, hour)
+            calendar.set(Calendar.MINUTE, minute)
+            val fechaVisitaTimestamp = calendar.time.time
 
-        val fragmentManager = requireActivity().supportFragmentManager
-        fragmentManager.beginTransaction()
-            .replace(R.id.fragment_container, citaRegistradaFragment)
-            .addToBackStack(null)
-            .commit()
+            val nuevoFolioCita = generarFolioCita()
+
+            val nuevaCita = Cita(
+                id = nuevoFolioCita,  // Usar el mismo valor para id y folioCita
+                fechaRegistro = System.currentTimeMillis(),
+                fechaVisita = fechaVisitaTimestamp,
+                telefonoContacto = telefono,
+                correoContacto = correo,
+                folioAvaluo = folioAvaluoSeleccionado,
+                empresa = empresa,
+                usuarioId = usuarioIdActual,
+                folioCita = nuevoFolioCita,
+                activo = true
+            )
+
+            val citasRef = db.getReference("citas")
+            citasRef.child(nuevoFolioCita).setValue(nuevaCita)
+                .addOnSuccessListener {
+                    try {
+                        Toast.makeText(requireContext(), "Cita agendada con éxito", Toast.LENGTH_SHORT).show()
+                        
+                        // Limpiar los campos después de éxito
+                        correoEt.text.clear()
+                        telefonoEt.text.clear()
+                        fechaEt.text.clear()
+                        horaEt.text.clear()
+                        fechaSeleccionada = null
+                        horaSeleccionada = null
+                        
+                        navegarACitaRegistrada(nuevoFolioCita)
+                    } catch (e: Exception) {
+                        Log.e("AgendarCitas", "Error después de agendar cita con éxito", e)
+                        // Intentar navegar al Home en caso de error
+                        try {
+                            val homeFragment = HomeFragment()
+                            requireActivity().supportFragmentManager
+                                .beginTransaction()
+                                .replace(R.id.fragment_container, homeFragment)
+                                .commit()
+                        } catch (e2: Exception) {
+                            Log.e("AgendarCitas", "Error en navegación de recuperación", e2)
+                        }
+                    }
+                }
+                .addOnFailureListener { e ->
+                    Toast.makeText(requireContext(), "Error al agendar la cita: ${e.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("Firebase", "Error al agendar la cita", e)
+                }
+        } catch (e: Exception) {
+            Log.e("AgendarCitas", "Error en procesarRegistroCita", e)
+            Toast.makeText(requireContext(), "Error inesperado: ${e.message}", Toast.LENGTH_SHORT).show()
+        }
     }
 
     companion object {

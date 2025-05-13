@@ -7,9 +7,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="8dp"
     app:cardCornerRadius="10dp"
-    app:cardElevation="4dp">
-
-    <LinearLayout
+    app:cardElevation="4dp">    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
@@ -61,7 +59,17 @@
             android:textColor="@color/text_primary"
             android:drawableStart="@drawable/ic_entorno"
             android:drawablePadding="8dp"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:layout_marginBottom="8dp"/>
+            
+        <Button
+            android:id="@+id/btnEliminarAvaluo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Eliminar Avalúo"
+            android:textColor="@android:color/white"
+            android:backgroundTint="#F44336"
+            android:layout_marginTop="8dp"/>
 
     </LinearLayout>
 </androidx.cardview.widget.CardView>
